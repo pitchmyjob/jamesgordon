@@ -20,14 +20,11 @@ import itemTheme from './Item';
 import labelTheme from './Label';
 import textAreaTheme from './Textarea';
 import textTheme from './Text';
-import toastTheme from './Toast';
 import tabTheme from './Tab';
 import tabBarTheme from './TabBar';
-import tabContainerTheme from './TabContainer';
 import viewTheme from './View';
 import tabHeadingTheme from './TabHeading';
 import iconTheme from './Icon';
-import segmentTheme from './Segment';
 import spinnerTheme from './Spinner';
 import cardItemTheme from './CardItem';
 import listItemTheme from './ListItem';
@@ -103,10 +100,6 @@ export default (variables = variable) => {
 
     'NativeBase.CardItem1': {
       ...cardItemTheme(variables),
-    },
-
-    'NativeBase.Toast': {
-      ...toastTheme(variables),
     },
 
     'NativeBase.H1': {
@@ -201,10 +194,6 @@ export default (variables = variable) => {
      ...tabTheme(variables),
     },
 
-    'NativeBase.Segment': {
-     ...segmentTheme(variables),
-    },
-
     'NativeBase.STabs': {
       flex: 1,
     },
@@ -217,9 +206,6 @@ export default (variables = variable) => {
     },
     'NativeBase.TabHeading': {
       ...tabHeadingTheme(variables),
-    },
-    'NativeBase.TabContainer': {
-      ...tabContainerTheme(variables),
     },
     'NativeBase.Switch': {
       marginVertical: -5,

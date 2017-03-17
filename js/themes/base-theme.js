@@ -2,12 +2,19 @@ import color from 'color';
 
 import { Platform } from 'react-native';
 
+const primary = require('./variable').brandPrimary;
+const secondary = require('./variable').brandSecondary;
+const info = require('./variable').brandInfo;
+const success = require('./variable').brandSuccess;
+const danger = require('./variable').brandDanger;
+const warning = require('./variable').brandWarning;
+const sidebar = require('./variable').brandSidebar;
+
 export default {
 
     // Badge
   badgeBg: '#ED1727',
   badgeColor: '#fff',
-
 
   // Button
   btnFontFamily: (Platform.OS === 'ios') ? 'HelveticaNeue' : 'Roboto_medium',
@@ -46,7 +53,7 @@ export default {
   },
   get btnTextSize() {
     return (Platform.OS === 'ios') ? this.fontSizeBase * 1.1 :
-    this.fontSizeBase - 1;
+      this.fontSizeBase - 1;
   },
   get btnTextSizeLarge() {
     return this.fontSizeBase * 1.5;
@@ -61,7 +68,7 @@ export default {
   buttonPadding: 6,
 
   get iconSizeLarge() {
-    return this.iconFontSize * 1.5;
+    return this.iconFontSize * 1.4;
   },
   get iconSizeSmall() {
     return this.iconFontSize * 0.6;
@@ -79,13 +86,14 @@ export default {
 
 
   // Color
-  brandPrimary: '#5067FF',
-  brandInfo: '#5bc0de',
-  brandSuccess: '#5cb85c',
-  brandDanger: '#d9534f',
-  brandWarning: '#f0ad4e',
-  brandSidebar: '#252932',
+  brandPrimary: primary,
+  brandInfo: info,
+  brandSuccess: success,
+  brandDanger: danger,
+  brandWarning: warning,
+  brandSidebar: sidebar,
 
+  brandSecondary: secondary,   // new style
 
   // Font
   fontFamily: (Platform.OS === 'ios') ? 'HelveticaNeue' : 'Roboto',
@@ -110,13 +118,13 @@ export default {
   // FooterTab
   tabBarTextColor: (Platform.OS === 'ios') ? '#6b6b6b' : '#b3c7f9',
   tabBarActiveTextColor: (Platform.OS === 'ios') ? '#007aff' : '#fff',
-  tabActiveBgColor: (Platform.OS === 'ios') ? '#e4f0fe' : undefined,
+  tabActiveBgColor: (Platform.OS === 'ios') ? '#cde1f9' : undefined,
 
 
   // Header
   iosToolbarBtnColor: '#007aff',
-  toolbarDefaultBg: (Platform.OS === 'ios') ? '#F8F8F8' : '#4179F7',
-  toolbarHeight: (Platform.OS === 'ios') ? 64 : 56,
+  toolbarDefaultBg: secondary,
+  toolbarHeight: (Platform.OS === 'ios') ? 70 : 55,
   toolbarIconSize: (Platform.OS === 'ios') ? 20 : 22,
   toolbarInputColor: '#CECDD2',
   toolbarInverseBg: '#222',
@@ -128,13 +136,13 @@ export default {
 
   // Icon
   iconFamily: 'Ionicons',
-  iconFontSize: (Platform.OS === 'ios') ? 30 : 28,
+  iconFontSize: (Platform.OS === 'ios') ? 37 : 35,
   iconMargin: 7,
 
 
   // InputGroup
   inputFontSize: 15,
-  inputBorderColor: '#D9D5DC',
+  inputBorderColor: '#fff',
   inputSuccessBorderColor: '#2b8339',
   inputErrorBorderColor: '#ed2f2f',
 
@@ -142,17 +150,16 @@ export default {
     return this.textColor;
   },
   get inputColorPlaceholder() {
-    return '#575757';
+    return 'rgba(255, 255, 255, 1.0)';
   },
 
   inputGroupMarginBottom: 10,
-  inputHeightBase: 40,
+  inputHeightBase: 50,
   inputPaddingLeft: 5,
 
   get inputPaddingLeftIcon() {
     return this.inputPaddingLeft * 8;
   },
-
 
   // Line Height
   btnLineHeight: 19,
@@ -160,16 +167,15 @@ export default {
   lineHeightH2: 27,
   lineHeightH3: 22,
   iconLineHeight: (Platform.OS === 'ios') ? 37 : 30,
-  lineHeight: (Platform.OS === 'ios') ? 20 : 26,
+  lineHeight: (Platform.OS === 'ios') ? 20 : 24,
 
 
   // List
-  listBorderColor: '#ACAAAB',
-  // listBorderColor: '#ddd',
-  listDividerBg: '#ddd',
+  listBorderColor: 'rgba(181, 181, 181, 0.34)',
+  listDividerBg: '#f2f2f2',
   listItemHeight: 45,
-  listItemPadding: 9,
-  listNoteColor: '#808080',
+  listItemPadding: 15,
+  listNoteColor: '#ddd',
   listNoteSize: 13,
 
 
@@ -199,12 +205,12 @@ export default {
 
 
   // Text
-  textColor: '#000',
+  textColor: '#fff',
   inverseTextColor: '#fff',
 
 
   // Title
-  titleFontSize: (Platform.OS === 'ios') ? 17 : 19,
+  titleFontSize: (Platform.OS === 'ios') ? 18 : 19,
   subTitleFontSize: (Platform.OS === 'ios') ? 12 : 14,
   subtitleColor: '#8e8e93',
 
