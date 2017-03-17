@@ -2,6 +2,8 @@ import color from 'color';
 
 import { Platform, Dimensions, PixelRatio } from 'react-native';
 
+const primary = require('../../js/themes/variable').brandPrimary;
+
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 const platform = Platform.OS;
@@ -39,14 +41,6 @@ export default {
   checkboxSize: 20,
   checkboxTickColor: '#fff',
 
-  // Segment
-  segmentBackgroundColor: '#3F51B5',
-  segmentActiveBackgroundColor: '#fff',
-  segmentTextColor: '#fff',
-  segmentActiveTextColor: '#3F51B5',
-  segmentBorderColor: '#fff',
-  segmentBorderColorMain: '#3F51B5',
-  
     // New Variable
   get defaultTextColor() {
     return this.textColor;
@@ -112,7 +106,7 @@ export default {
 
 
       // Color
-  brandPrimary: '#2874F0',
+  brandPrimary: primary,
   brandInfo: '#62B1F6',
   brandSuccess: '#5cb85c',
   brandDanger: '#d9534f',
@@ -159,7 +153,7 @@ export default {
 
     // Header
   toolbarBtnColor: '#fff',
-  toolbarDefaultBg: '#2874F0',
+  toolbarDefaultBg: primary,
   toolbarHeight: (platform === 'ios') ? 64 : 56,
   toolbarIconSize: (platform === 'ios') ? 20 : 22,
   toolbarSearchIconSize: (platform === 'ios') ? 20 : 23,
@@ -168,7 +162,7 @@ export default {
   toolbarInverseBg: '#222',
   toolbarTextColor: '#fff',
   iosStatusbar: 'light-content',
-  toolbarDefaultBorder: '#2874F0',
+  toolbarDefaultBorder: '#aaa',
   get statusBarColor() {
     return color(this.toolbarDefaultBg).darken(0.2).hexString();
   },
@@ -216,7 +210,7 @@ export default {
   listBorderColor: '#c9c9c9',
   listDividerBg: '#f4f4f4',
   listItemHeight: 45,
-  listBtnUnderlayColor: '#DDD',
+  listBtnUnderlayColor: primary,
 
     // Card
   cardBorderColor: '#ccc',
@@ -280,7 +274,7 @@ export default {
   contentPadding: 10,
 
   get darkenHeader() {
-    return color(this.tabBgColor).darken(0.03).hexString();
+    return color(this.toolbarDefaultBg).darken(0.03).hexString();
   },
 
   dropdownBg: '#000',
