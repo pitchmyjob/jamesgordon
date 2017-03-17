@@ -10,18 +10,18 @@ export default {
     flex: 1,
     width: (deviceHeight < 500) ? 80 : (deviceWidth / 4) + 12,
     resizeMode: 'contain',
-    height: (deviceHeight < 500) ? 50 : (deviceHeight / 15),
+    // height: (deviceHeight < 500) ? 50 : (deviceHeight / 15),
     alignSelf: 'center',
-    marginTop: (deviceWidth < 330) ? (deviceHeight / 15) : (deviceHeight / 16),
+    // marginTop: (deviceWidth < 330) ? (deviceHeight / 15) : (deviceHeight / 6),
   },
   aShadow: {
     flex: 1,
     resizeMode: 'contain',
     width: (deviceWidth / 3) + 8,
-    height: (deviceHeight / 20),
+    // height: (deviceHeight / 20),
     padding: 20,
     alignSelf: 'center',
-    marginTop: (deviceWidth < 330) ? (deviceHeight / 15) : ((deviceHeight / 14) - 60),
+    // marginTop: (deviceWidth < 330) ? (deviceHeight / 15) : ((deviceHeight / 14) - 60),
   },
   inputGrp: {
     flexDirection: 'row',
@@ -45,10 +45,10 @@ export default {
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 70,
-    marginTop: (deviceHeight < 500) ? (Platform.OS === 'android' ? 20 : 0) : (Platform.OS === 'android' ? ((deviceHeight / 16) - 45) : ((deviceHeight / 16) - 10)),
+    // marginTop: (deviceHeight < 500) ? (Platform.OS === 'android' ? 20 : 0) : (Platform.OS === 'android' ? ((deviceHeight / 16) - 45) : ((deviceHeight / 16) - 10)),
   },
   linkedInBtn: {
-    marginBottom: 20,
+    marginBottom: 30,
     height: 50,
     alignItems: 'center',
   },
@@ -70,7 +70,8 @@ export default {
     opacity: 0.9,
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#fff'
+    color: '#fff',
+    width: (deviceWidth / 2)
   },
   otherLinksContainer: {
     flexDirection: 'row',

@@ -94,7 +94,7 @@ class Login extends Component {
                 </Left>
                 <Right>
                   <Button transparent style={{ alignSelf: 'flex-end' }} onPress={() => this.pushRoute('forgetPassword')}>
-                    <Text style={styles.helpBtns}>
+                    <Text style={{...styles.helpBtns, textAlign: 'right'}}>
                       Mot de passe oublié ?
                     </Text>
                   </Button>
