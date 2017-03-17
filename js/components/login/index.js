@@ -68,7 +68,7 @@ class Login extends Component {
               <Item rounded style={styles.inputGrp}>
                 <Icon name="unlock" />
                 <Input
-                  placeholder="Password"
+                  placeholder="Mot de passe"
                   secureTextEntry
                   placeholderTextColor="#fff"
                   onChangeText={password => this.setState({ password })}
