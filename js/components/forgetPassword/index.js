@@ -10,7 +10,7 @@ const { reset } = actions;
 
 const bg = require('../../../images/bg.png');
 
-class Register extends Component {
+class ForgetPassword extends Component {
 
   static propTypes = {
     reset: React.PropTypes.func,
@@ -23,11 +23,8 @@ class Register extends Component {
     super(props);
 
     this.state = {
-      first_name: '',
-      last_name: '',
       email: '',
       phone: '',
-      password: '',
     }
   }
 
@@ -37,27 +34,9 @@ class Register extends Component {
         <Image source={bg} style={styles.background} >
           <Content padder scrollEnabled={false}>
             <Text style={styles.signupHeader}>
-              Inscription
+              Mot de passe oublié
             </Text>
             <View style={styles.signupContainer}>
-              <Item rounded style={styles.inputGrp}>
-                <Icon name="person" />
-                <Input
-                  placeholder="Prénom"
-                  placeholderTextColor="#fff"
-                  onChangeText={first_name => this.setState({ first_name })}
-                  style={styles.input}
-                />
-              </Item>
-              <Item rounded style={styles.inputGrp}>
-                <Icon name="person" />
-                <Input
-                  placeholder="Nom"
-                  placeholderTextColor="#fff"
-                  onChangeText={last_name => this.setState({ last_name })}
-                  style={styles.input}
-                />
-              </Item>
               <Item rounded style={styles.inputGrp}>
                 <Icon name="mail-open" />
                 <Input
@@ -67,6 +46,7 @@ class Register extends Component {
                   style={styles.input}
                 />
               </Item>
+              <Text style={styles.separatorText}>ou</Text>
               <Item rounded style={styles.inputGrp}>
                 <Icon name="phone" />
                 <Input
@@ -76,24 +56,12 @@ class Register extends Component {
                   style={styles.input}
                 />
               </Item>
-              <Item rounded style={styles.inputGrp}>
-                <Icon name="unlock" />
-                <Input
-                  placeholder="Mot de passe" secureTextEntry
-                  placeholderTextColor="#fff"
-                  onChangeText={password => this.setState({ password })}
-                  style={styles.input}
-                />
-              </Item>
               <Button
                 light block rounded bordered
                 onPress={() => this.props.reset(this.props.navigation.key)}
                 style={styles.signupBtn}
               >
-                <Text style={{ color: '#fff' }}>Inscription</Text>
-              </Button>
-              <Button block transparent style={{ marginTop: 10 }}>
-                <Text style={styles.termsText}>Conditions d'utilisation</Text>
+                <Text style={{ color: '#fff' }}>Réinitialiser mon mot de passe</Text>
               </Button>
             </View>
           </Content>
@@ -113,4 +81,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(ForgetPassword);

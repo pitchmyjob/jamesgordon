@@ -9,6 +9,7 @@ import { closeDrawer } from './actions/drawer';
 import SplashScreen from './components/splashscreen/';
 import Login from './components/login/';
 import Register from './components/register/';
+import ForgetPassword from './components/forgetPassword/';
 import SideBar from './components/sideBar';
 import { statusBarColor } from './themes/base-theme';
 
@@ -73,6 +74,8 @@ class AppNavigator extends Component {
         return <Login />;
       case 'register':
         return <Register />;
+      case 'forgetPassword':
+        return <ForgetPassword />;
       default:
         return <SplashScreen />;
     }
