@@ -6,7 +6,8 @@ import { actions } from 'react-native-navigation-redux-helpers';
 
 import { closeDrawer } from './actions/drawer';
 
-import SplashPage from './components/splashscreen/';
+import SplashScreen from './components/splashscreen/';
+import Login from './components/login/';
 import SideBar from './components/sideBar';
 import { statusBarColor } from './themes/base-theme';
 
@@ -66,9 +67,11 @@ class AppNavigator extends Component {
   _renderScene(props) { // eslint-disable-line class-methods-use-this
     switch (props.scene.route.key) {
       case 'splashscreen':
-        return <SplashPage />;
+        return <SplashScreen />;
+      case 'login':
+        return <Login />;
       default:
-        return <SplashPage />;
+        return <SplashScreen />;
     }
   }
 
@@ -103,7 +106,7 @@ class AppNavigator extends Component {
       >
         <StatusBar
           backgroundColor={statusBarColor}
-          barStyle="default"
+          barStyle="light-content"
         />
         <NavigationCardStack
           navigationState={this.props.navigation}
