@@ -7,20 +7,13 @@ import { actions } from 'react-native-navigation-redux-helpers';
 
 import { closeDrawer } from './actions/drawer';
 
-import Login from './components/login/';
-import Home from './components/home/';
-import BlankPage from './components/blankPage';
 import SplashPage from './components/splashscreen/';
 import SideBar from './components/sideBar';
 import { statusBarColor } from './themes/base-theme';
 
-const {
-  popRoute,
-} = actions;
+const { popRoute } = actions;
 
-const {
-  CardStack: NavigationCardStack,
-} = NavigationExperimental;
+const { CardStack: NavigationCardStack } = NavigationExperimental;
 
 class AppNavigator extends Component {
 
@@ -75,14 +68,8 @@ class AppNavigator extends Component {
     switch (props.scene.route.key) {
       case 'splashscreen':
         return <SplashPage />;
-      case 'login':
-        return <Login />;
-      case 'home':
-        return <Home />;
-      case 'blankPage':
-        return <BlankPage />;
-      default :
-        return <Login />;
+      default:
+        return <SplashPage />;
     }
   }
 

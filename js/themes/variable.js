@@ -1,4 +1,3 @@
-
 const color = require('color');
 
 // theme background
