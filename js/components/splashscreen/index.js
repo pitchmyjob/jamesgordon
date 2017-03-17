@@ -19,7 +19,7 @@ class SplashScreen extends Component {
     const navigator = this.props.navigator;
 
     setTimeout (() => {
-      this.props.replaceAt('splashscreen', { key: 'home' }, this.props.navigation.key);
+      this.props.replaceAt('splashscreen', { key: 'login' }, this.props.navigation.key);
     }, 2000);
   }
 
