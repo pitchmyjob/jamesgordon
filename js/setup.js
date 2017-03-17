@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import { StyleProvider } from 'native-base';
 
 import App from './App';
-import { StyleProvider } from 'native-base';
 import configureStore from './configureStore';
 import getTheme from '../native-base-theme/components';
-import platform from '../native-base-theme/variables/commonColor';
+import variables from '../native-base-theme/variables/commonColor';
 
 function setup():React.Component {
   class Root extends Component {
@@ -20,7 +20,7 @@ function setup():React.Component {
 
     render() {
       return (
-        <StyleProvider style={getTheme(platform)}>
+        <StyleProvider style={getTheme(variables)}>
           <Provider store={this.state.store}>
             <App />
           </Provider>
