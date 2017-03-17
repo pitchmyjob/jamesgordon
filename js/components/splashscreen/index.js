@@ -20,7 +20,7 @@ class SplashScreen extends Component {
 
     setTimeout (() => {
       this.props.replaceAt('splashscreen', { key: 'login' }, this.props.navigation.key);
-    }, 2000);
+    }, 800);
   }
 
   render() { // eslint-disable-line class-methods-use-this

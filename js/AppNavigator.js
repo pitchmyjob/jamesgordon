@@ -8,6 +8,7 @@ import { closeDrawer } from './actions/drawer';
 
 import SplashScreen from './components/splashscreen/';
 import Login from './components/login/';
+import Register from './components/register/';
 import SideBar from './components/sideBar';
 import { statusBarColor } from './themes/base-theme';
 
@@ -70,6 +71,8 @@ class AppNavigator extends Component {
         return <SplashScreen />;
       case 'login':
         return <Login />;
+      case 'register':
+        return <Register />;
       default:
         return <SplashScreen />;
     }

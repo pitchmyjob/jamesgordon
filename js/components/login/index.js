@@ -57,7 +57,7 @@ class Login extends Component {
                 </Text>
               </Button>
               <Item rounded style={styles.inputGrp}>
-                <Icon name="mail" />
+                <Icon name="mail-open" />
                 <Input
                   placeholder="Adresse e-mail"
                   onChangeText={email => this.setState({ email })}
@@ -86,7 +86,7 @@ class Login extends Component {
               </Button>
               <View style={styles.otherLinksContainer}>
                 <Left>
-                  <Button transparent style={{ alignSelf: 'flex-start' }} onPress={() => this.pushRoute('signUp')}>
+                  <Button transparent style={{ alignSelf: 'flex-start' }} onPress={() => this.pushRoute('register')}>
                     <Text style={styles.helpBtns}>
                       Inscription
                     </Text>
