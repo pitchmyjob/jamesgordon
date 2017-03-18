@@ -6,14 +6,14 @@ import { Container, Content, Text, Button, Icon, Item, Input, View } from 'nativ
 
 import styles from './styles';
 
-const { reset } = actions;
+const { pushRoute } = actions;
 
 const bg = require('../../../images/bg.png');
 
 class Register extends Component {
 
   static propTypes = {
-    reset: React.PropTypes.func,
+    pushRoute: React.PropTypes.func,
     navigation: React.PropTypes.shape({
       key: React.PropTypes.string,
     }),
@@ -29,6 +29,10 @@ class Register extends Component {
       phone: '',
       password: '',
     }
+  }
+
+  pushRoute(route) {
+    this.props.pushRoute({ key: route, index: 2 }, this.props.navigation.key);
   }
 
   render() {
@@ -87,10 +91,10 @@ class Register extends Component {
               </Item>
               <Button
                 light block rounded bordered
-                onPress={() => this.props.reset(this.props.navigation.key)}
+                onPress={() => this.pushRoute('activateAccount')}
                 style={styles.signupBtn}
               >
-                <Text style={{ color: '#fff' }}>Inscription</Text>
+                <Text style={{ color: '#fff' }}>Continuer</Text>
               </Button>
               <Button block transparent style={{ marginTop: 10 }}>
                 <Text style={styles.termsText}>Conditions d'utilisation</Text>
@@ -109,7 +113,7 @@ const mapStateToProps = state => ({
 
 function mapDispatchToProps(dispatch) {
   return {
-    reset: key => dispatch(reset([{ key: 'login' }], key, 0)),
+    pushRoute: (route, key) => dispatch(pushRoute(route, key)),
   };
 }
 
