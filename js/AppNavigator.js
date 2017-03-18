@@ -12,6 +12,7 @@ import Register from './components/register/';
 import ActivateAccount from './components/activateAccount/';
 import ForgetPassword from './components/forgetPassword/';
 import SideBar from './components/sideBar';
+import Home from './components/home';
 import { statusBarColor } from './themes/base-theme';
 
 const { popRoute } = actions;
@@ -79,6 +80,8 @@ class AppNavigator extends Component {
         return <ActivateAccount />;
       case 'forgetPassword':
         return <ForgetPassword />;
+      case 'home':
+        return <Home />;
       default:
         return <SplashScreen />;
     }
