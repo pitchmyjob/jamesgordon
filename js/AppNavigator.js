@@ -11,6 +11,8 @@ import Login from './components/login/';
 import Register from './components/register/';
 import ActivateAccount from './components/activateAccount/';
 import ForgetPassword from './components/forgetPassword/';
+import Jobs from './components/jobs/';
+import Matching from './components/matching/';
 import SideBar from './components/sideBar';
 import Home from './components/home';
 import { statusBarColor } from './themes/base-theme';
@@ -80,6 +82,10 @@ class AppNavigator extends Component {
         return <ActivateAccount />;
       case 'forgetPassword':
         return <ForgetPassword />;
+      case 'jobs':
+        return <Jobs />;
+      case 'matching':
+        return <Matching />;
       case 'home':
         return <Home />;
       default:

@@ -5,7 +5,7 @@ const initialState = {
   index: 0,
   routes: [
     {
-      key: 'splashscreen',
+      key: 'matching',
       index: 0,
     },
   ],
