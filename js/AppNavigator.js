@@ -14,6 +14,7 @@ import ForgetPassword from './components/forgetPassword/';
 import Jobs from './components/jobs/';
 import Matching from './components/matching/';
 import Profile from './components/profile/';
+import ProfileUpdate from './components/profileUpdate/';
 import SideBar from './components/sideBar';
 import Home from './components/home';
 import { statusBarColor } from './themes/base-theme';
@@ -91,6 +92,8 @@ class AppNavigator extends Component {
         return <Home />;
       case 'profile':
         return <Profile />;
+      case 'profileUpdate':
+        return <ProfileUpdate />;
       default:
         return <SplashScreen />;
     }
