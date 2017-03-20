@@ -34,7 +34,7 @@ class Profile extends Component { // eslint-disable-line
     return (
       <Container>
         <View style={styles.container}>
-          <HeaderContent />
+          <HeaderContent subtitle={'Mon profil'} />
           <Content>
             <View style={styles.profileInfoContainer}>
               <TouchableOpacity style={{ alignSelf: 'center' }}>
@@ -106,7 +106,7 @@ class Profile extends Component { // eslint-disable-line
                   <Icon name="arrow-forward" style={styles.newsIcon} />
                 </Right>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.itemContainer}>
+              <TouchableOpacity style={styles.itemContainer} onPress={() => this.pushRoute('languageList')}>
                 <Left>
                   <Icon name="chatboxes" style={styles.newsIcon} />
                 </Left>

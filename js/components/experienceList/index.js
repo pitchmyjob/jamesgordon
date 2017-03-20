@@ -44,7 +44,7 @@ class ExperienceList extends Component { // eslint-disable-line
   render() { // eslint-disable-line class-methods-use-this
     return (
       <Container style={styles.container}>
-          <HeaderContent hasBackButton={true} />
+          <HeaderContent hasBackButton={true} subtitle={'Expériences'} />
           <Content>
             {this.renderExperiences()}
             <Button block rounded bordered style={styles.btnAdd}>

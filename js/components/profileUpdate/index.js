@@ -18,7 +18,10 @@ class ProfileUpdate extends Component { // eslint-disable-line
   render() { // eslint-disable-line class-methods-use-this
     return (
       <Container>
-        <HeaderContent hasBackButton={true} />
+        <HeaderContent
+          hasBackButton={true}
+          subtitle={'Informations'}
+        />
         <Content style={styles.container}>
           <Form style={styles.formContainer}>
             <Item floatingLabel style={styles.formInput}>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Image, View } from 'react-native';
 import { connect } from 'react-redux';
 import { actions } from 'react-native-navigation-redux-helpers';
-import { Icon, Button, Left, Right, Body, Header } from 'native-base';
+import { Icon, Button, Left, Right, Body, Header, Subtitle, Text } from 'native-base';
 
 import styles from './styles';
 
@@ -30,7 +30,7 @@ class HeaderContent extends Component {
   }
 
   render() {
-    const { hasBackButton } = this.props
+    const { hasBackButton, subtitle } = this.props
 
     return (
       <Header>
@@ -44,6 +44,12 @@ class HeaderContent extends Component {
         }
         <Body>
           <Image source={headerLogo} style={styles.imageHeader} />
+          {
+            subtitle &&
+            <Subtitle>
+              <Text style={styles.headerSubtitle}>{subtitle}</Text>
+            </Subtitle>
+          }
         </Body>
         {hasBackButton && <Right />}
       </Header>

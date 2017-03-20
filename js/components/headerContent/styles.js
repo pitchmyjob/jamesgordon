@@ -25,4 +25,7 @@ module.exports = StyleSheet.create({
     width: 95,
     resizeMode: 'contain',
   },
+  headerSubtitle: {
+    color: '#fff',
+  },
 });
