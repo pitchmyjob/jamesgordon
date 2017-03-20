@@ -18,6 +18,7 @@ import ProfileUpdate from './components/profileUpdate/';
 import SideBar from './components/sideBar';
 import Home from './components/home';
 import ExperienceList from './components/experienceList';
+import EducationList from './components/educationList';
 import { statusBarColor } from './themes/base-theme';
 
 const { popRoute } = actions;
@@ -97,6 +98,8 @@ class AppNavigator extends Component {
         return <ProfileUpdate />;
       case 'experienceList':
         return <ExperienceList />;
+      case 'educationList':
+        return <EducationList />;
       default:
         return <SplashScreen />;
     }
