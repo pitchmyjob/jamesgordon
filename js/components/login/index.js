@@ -50,7 +50,7 @@ class Login extends Component {
               <Button
                 light block rounded bordered
                 style={styles.linkedInBtn}
-                onPress={() => this.replaceRoute('home')}
+                onPress={() => this.replaceRoute('profile')}
               >
                 <Text style={Platform.OS === 'android' ? styles.aBtnText : styles.iosBtnText}>
                   LinkedIn
@@ -78,7 +78,7 @@ class Login extends Component {
               <Button
                 light block rounded bordered
                 style={styles.loginBtn}
-                onPress={() => this.replaceRoute('home')}
+                onPress={() => this.replaceRoute('profile')}
               >
                 <Text style={Platform.OS === 'android' ? styles.aBtnText : styles.iosBtnText}>
                   Connexion
