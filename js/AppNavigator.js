@@ -19,6 +19,7 @@ import SideBar from './components/sideBar';
 import Home from './components/home';
 import ExperienceList from './components/experienceList';
 import EducationList from './components/educationList';
+import LanguageList from './components/languageList';
 import { statusBarColor } from './themes/base-theme';
 
 const { popRoute } = actions;
@@ -100,6 +101,8 @@ class AppNavigator extends Component {
         return <ExperienceList />;
       case 'educationList':
         return <EducationList />;
+      case 'languageList':
+        return <LanguageList />;
       default:
         return <SplashScreen />;
     }
