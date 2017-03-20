@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { actions } from 'react-native-navigation-redux-helpers';
 import { Image, View, TouchableOpacity } from 'react-native';
 import { Container, Content, Thumbnail, Text, Icon, Body, Left, Right } from 'native-base';
 import { Grid, Col, Row } from 'react-native-easy-grid';
@@ -8,12 +9,25 @@ import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
 import styles from './styles';
 
+const { pushRoute } = actions;
+
 class Profile extends Component { // eslint-disable-line
 
   static propTypes = {
+    pushRoute: React.PropTypes.func,
     navigation: React.PropTypes.shape({
       key: React.PropTypes.string,
     }),
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.pushRoute = this.pushRoute.bind(this);
+  }
+
+  pushRoute(route) {
+    this.props.pushRoute({ key: route, index: 1 }, this.props.navigation.key);
   }
 
   render() { // eslint-disable-line class-methods-use-this
@@ -33,70 +47,93 @@ class Profile extends Component { // eslint-disable-line
               </View>
             </View>
             <View style={styles.itemsContainer}>
-              <TouchableOpacity style={styles.itemContainer}>
-                <View style={styles.newsContent}>
-                  <Left>
-                    <Icon name="apps" />
-                  </Left>
+              <TouchableOpacity style={styles.itemContainer} onPress={() => this.pushRoute('profileUpdate')}>
+                <Left>
+                  <Icon name="person" style={styles.newsIcon} />
+                </Left>
+                <Body style={styles.newsContent}>
                   <Text style={styles.newsHeader}>
-                    Informations générales
+                      Informations générales
                   </Text>
-                  <Body>
                     <Text style={styles.newsLink}>+33 6 28 43 40 08</Text>
                     <Text style={styles.newsLink}>tannier.yannis@gmail.com</Text>
-                  </Body>
-                  <Right>
-                    <Icon name="arrow-forward" />
-                  </Right>
-                </View>
+                </Body>
+                <Right>
+                  <Icon name="arrow-forward" style={styles.newsIcon} />
+                </Right>
               </TouchableOpacity>
               <TouchableOpacity style={styles.itemContainer}>
-                <Icon name="apps" style={styles.newsIcon} />
-                <View style={styles.newsContent}>
+                <Left>
+                  <Icon name="briefcase" style={styles.newsIcon} />
+                </Left>
+                <Body style={styles.newsContent}>
                   <Text style={styles.newsHeader}>
-                    Expériences
+                    Mes expériences
                   </Text>
                   <Text style={styles.newsLink}>Dailymotion</Text>
                   <Text style={styles.newsLink}>Weezevent</Text>
-                </View>
+                </Body>
+                <Right>
+                  <Icon name="arrow-forward" style={styles.newsIcon} />
+                </Right>
               </TouchableOpacity>
               <TouchableOpacity style={styles.itemContainer}>
-                <Icon name="apps" style={styles.newsIcon} />
-                <View style={styles.newsContent}>
+                <Left>
+                  <Icon name="glasses" style={styles.newsIcon} />
+                </Left>
+                <Body style={styles.newsContent}>
                   <Text style={styles.newsHeader}>
-                    Formations
+                    Mes formations
                   </Text>
                   <Text style={styles.newsLink}>Makina Corpus</Text>
                   <Text style={styles.newsLink}>ESGI</Text>
-                </View>
+                </Body>
+                <Right>
+                  <Icon name="arrow-forward" style={styles.newsIcon} />
+                </Right>
               </TouchableOpacity>
               <TouchableOpacity style={styles.itemContainer}>
-                <Icon name="apps" style={styles.newsIcon} />
-                <View style={styles.newsContent}>
+                <Left>
+                  <Icon name="star-half" style={styles.newsIcon} />
+                </Left>
+                <Body style={styles.newsContent}>
                   <Text style={styles.newsHeader}>
-                    Compétences
+                    Mes compétences
                   </Text>
                   <Text style={styles.newsLink}>Python, Django, SQL, GraphQL</Text>
-                </View>
+                </Body>
+                <Right>
+                  <Icon name="arrow-forward" style={styles.newsIcon} />
+                </Right>
               </TouchableOpacity>
               <TouchableOpacity style={styles.itemContainer}>
-                <Icon name="apps" style={styles.newsIcon} />
-                <View style={styles.newsContent}>
+                <Left>
+                  <Icon name="chatboxes" style={styles.newsIcon} />
+                </Left>
+                <Body style={styles.newsContent}>
                   <Text style={styles.newsHeader}>
-                    Langues
+                    Mes langues
                   </Text>
                   <Text style={styles.newsLink}>Français</Text>
                   <Text style={styles.newsLink}>Anglais</Text>
-                </View>
+                </Body>
+                <Right>
+                  <Icon name="arrow-forward" style={styles.newsIcon} />
+                </Right>
               </TouchableOpacity>
               <TouchableOpacity style={styles.itemContainer}>
-                <Icon name="apps" style={styles.newsIcon} />
-                <View style={styles.newsContent}>
+                <Left>
+                  <Icon name="beer" style={styles.newsIcon} />
+                </Left>
+                <Body style={styles.newsContent}>
                   <Text style={styles.newsHeader}>
-                    Intérêts
+                    Mes intérêts
                   </Text>
                   <Text style={styles.newsLink}>Rugby, cinéma, série, sport</Text>
-                </View>
+                </Body>
+                <Right>
+                  <Icon name="arrow-forward" style={styles.newsIcon} />
+                </Right>
               </TouchableOpacity>
             </View>
           </Content>
@@ -111,4 +148,10 @@ const mapStateToProps = state => ({
   navigation: state.cardNavigation,
 });
 
-export default connect(mapStateToProps, null)(Profile);
+function mapDispatchToProps(dispatch) {
+  return {
+    pushRoute: (route, key) => dispatch(pushRoute(route, key)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

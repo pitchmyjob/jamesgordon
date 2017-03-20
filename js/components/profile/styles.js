@@ -41,7 +41,8 @@ export default {
   },
   newsIcon: {
     color: '#ddd',
-    width: 40,
+    // width: 40,
+    alignSelf: 'center',
     alignItems: 'center',
   },
 
@@ -52,6 +53,7 @@ export default {
   },
   newsHeader: {
     color: '#444',
+    alignSelf: 'flex-start',
     fontWeight: 'bold',
   },
   newsLink: {
