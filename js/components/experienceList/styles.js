@@ -9,4 +9,9 @@ export default {
   experienceText: {
     color: 'black',
   },
+  btnAdd: {
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+  },
 };

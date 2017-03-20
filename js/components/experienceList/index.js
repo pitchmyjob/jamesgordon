@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from 'react-native-navigation-redux-helpers';
-import { Container, Content, ListItem, Text } from 'native-base';
+import { Container, Content, ListItem, Text, Button } from 'native-base';
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
@@ -45,7 +45,12 @@ class ExperienceList extends Component { // eslint-disable-line
     return (
       <Container style={styles.container}>
           <HeaderContent hasBackButton={true} />
-          <Content>{this.renderExperiences()}</Content>
+          <Content>
+            {this.renderExperiences()}
+            <Button block rounded bordered style={styles.btnAdd}>
+              <Text>Ajouter</Text>
+            </Button>
+          </Content>
           <FooterContent currentTab={'profile'} />
       </Container>
     );
