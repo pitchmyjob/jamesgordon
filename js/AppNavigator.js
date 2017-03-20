@@ -13,6 +13,7 @@ import ActivateAccount from './components/activateAccount/';
 import ForgetPassword from './components/forgetPassword/';
 import Jobs from './components/jobs/';
 import Matching from './components/matching/';
+import Profile from './components/profile/';
 import SideBar from './components/sideBar';
 import Home from './components/home';
 import { statusBarColor } from './themes/base-theme';
@@ -88,6 +89,8 @@ class AppNavigator extends Component {
         return <Matching />;
       case 'home':
         return <Home />;
+      case 'profile':
+        return <Profile />;
       default:
         return <SplashScreen />;
     }

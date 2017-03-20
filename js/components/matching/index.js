@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Content, DeckSwiper, Thumbnail, Card, CardItem, Left, Body, Icon, Text, View, Button } from 'native-base';
+import { Container, Content, DeckSwiper, Thumbnail, Card, CardItem, Left, Right, Body, Icon, Text, View, Button } from 'native-base';
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
@@ -70,48 +70,30 @@ class Matching extends Component { // eslint-disable-line
 
   renderCard(item) {
     return (
-      <Card>
-        {/*<CardItem>
+      <Card style={{ elevation: 3 }}>
+        <CardItem bordered>
           <Left>
             <Thumbnail source={item.job.company.logo} />
           </Left>
           <Body>
-            <Text>{item.job.company.name}</Text>
+            <Text style={styles.blackColor}>{item.job.company.name}</Text>
             <Text note>{item.job.title}</Text>
+            <Text note>
+              {item.job.contractTypes.join(', ')}
+            </Text>
           </Body>
+          <Right>
+            <Text style={styles.blackColor}>{item.matchingScore}%</Text>
+          </Right>
         </CardItem>
         <CardItem>
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Button transparent>
-              <Icon name="heart" />
-            </Button>
-            <Button transparent>
-              <Icon name="camera" />
-            </Button>
-            <Button transparent>
-              <Icon name="trash" />
-            </Button>
-          </View>
+          <Text style={styles.blackColor}>{item.job.description}</Text>
+        </CardItem>
+          {/*<Text style={styles.blackColor}>{item.job.address}</Text>
+          <Text style={styles.blackColor}>il y a {item.job.created}</Text>
+          <Text style={styles.blackColor}>Compétences recherchées : {item.job.skills.join(', ')}</Text>
         </CardItem>*/}
-
-        <CardItem>
-          <Thumbnail source={item.job.company.logo} />
-        </CardItem>
-        <CardItem>
-          <Text>
-            {item.job.contractTypes.map((contractType) => {
-              return '#' + contractType
-            })}
-          </Text>
-          <Text>{item.matchingScore}%</Text>
-        </CardItem>
-        <CardItem>
-          <Text>{item.job.address}</Text>
-          <Text>{item.job.description}</Text>
-          <Text>il y a {item.job.created}</Text>
-          <Text>Compétences recherchées : {item.job.skills.join(', ')}</Text>
-        </CardItem>
-        <CardItem>
+        <CardItem bordered>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
             <Button transparent>
               <Icon name="heart" />

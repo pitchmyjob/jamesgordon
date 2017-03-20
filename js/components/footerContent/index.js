@@ -16,7 +16,7 @@ class FooterContent extends Component {
     super(props);
 
     this.state = {
-      activeFooterTab: 'matching'
+      activeFooterTab: props.currentTab || 'matching'
     };
 
     this.handleFooterTabClick = this.handleFooterTabClick.bind(this);
@@ -35,8 +35,8 @@ class FooterContent extends Component {
     return (
       <Footer>
         <FooterTab>
-          <Button active={this.isActiveFooterTab('profil')} onPress={() => this.handleFooterTabClick('profil')}>
-            <Icon active={this.isActiveFooterTab('profil')} name="person" />
+          <Button active={this.isActiveFooterTab('profile')} onPress={() => this.handleFooterTabClick('profile')}>
+            <Icon active={this.isActiveFooterTab('profile')} name="person" />
             <Text>Profil</Text>
           </Button>
           <Button active={this.isActiveFooterTab('matching')} onPress={() => this.handleFooterTabClick('matching')}>

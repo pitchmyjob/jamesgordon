@@ -5,7 +5,7 @@ const initialState = {
   index: 0,
   routes: [
     {
-      key: 'matching',
+      key: 'profile',
       index: 0,
     },
   ],
