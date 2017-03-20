@@ -62,7 +62,7 @@ class Profile extends Component { // eslint-disable-line
                   <Icon name="arrow-forward" style={styles.newsIcon} />
                 </Right>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.itemContainer}>
+              <TouchableOpacity style={styles.itemContainer}  onPress={() => this.pushRoute('experienceList')}>
                 <Left>
                   <Icon name="briefcase" style={styles.newsIcon} />
                 </Left>
