@@ -72,7 +72,7 @@ class Register extends Component {
                 />
               </Item>
               <Item rounded style={styles.inputGrp}>
-                <Icon name="phone" />
+                <Icon name="phone-portrait" />
                 <Input
                   placeholder="Numéro de téléphone"
                   placeholderTextColor="#fff"
