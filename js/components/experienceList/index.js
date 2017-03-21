@@ -5,6 +5,7 @@ import { Container, Content, ListItem, Text, Button } from 'native-base';
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
+import Loader from './../loader';
 import styles from './styles';
 
 const { pushRoute } = actions;
@@ -32,13 +33,36 @@ class ExperienceList extends Component { // eslint-disable-line
   }
 
   renderExperiences() {
-    return experiences.map((experience, index) => {
+    const { fetching, fulfilled, error, experiences } = this.props.experiences;
+
+    if (error) {
       return (
-        <ListItem key={index} style={styles.experience} onPress={() => this.pushRoute('experienceForm')}>
-          <Text style={styles.experienceText}>{experience}</Text>
+        <ListItem style={styles.experience}>
+          <Text style={{color: 'red'}}>Erreur...</Text>
         </ListItem>
-      )
-    })
+      );
+    }
+    else if (fulfilled) {
+      if (experiences.length > 0) {
+        return experiences.map((experience) => {
+          return (
+            <ListItem key={experience.id} style={styles.experience} onPress={() => this.pushRoute('experienceForm')}>
+              <Text style={styles.experienceText}>{experience.company}</Text>
+            </ListItem>
+          );
+        });
+      }
+      else {
+        return (
+          <ListItem style={styles.experience}>
+            <Text style={styles.experienceText}>Aucune expérience</Text>
+          </ListItem>
+        );
+      }
+    }
+    else {
+      return <Loader />;
+    }
   }
 
   render() { // eslint-disable-line class-methods-use-this
@@ -59,6 +83,7 @@ class ExperienceList extends Component { // eslint-disable-line
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
+  experiences: state.experiences.experienceList,
 });
 
 function mapDispatchToProps(dispatch) {
