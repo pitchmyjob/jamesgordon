@@ -5,7 +5,10 @@ import { Container, Content, Text, Form, Item, Input, Label, Button, Icon } from
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
+import Loader from './../loader';
 import styles from './styles';
+
+import { destroyInterest } from '../../actions/interests'
 
 class InterestForm extends Component { // eslint-disable-line
 
@@ -19,12 +22,11 @@ class InterestForm extends Component { // eslint-disable-line
     super(props);
 
     this.state = {
-      interests: ['Rugby', 'Cinéma', 'Séries'],
       interest: '',
     };
 
     this.addInterest = this.addInterest.bind(this);
-    this.removeInterest = this.removeInterest.bind(this);
+    this.renderInterests = this.renderInterests.bind(this);
   }
 
   addInterest(event) {
@@ -36,12 +38,54 @@ class InterestForm extends Component { // eslint-disable-line
     this.setState({ interest: '' });
   }
 
-  removeInterest(index) {
-    const newInterestList = this.state.interests.filter((interest, indexList) => {
-      return indexList !== index;
-    });
+  renderInterests() {
+    const { fetching, fulfilled, error, interests } = this.props.interestList;
+    const interestActive = this.props.interestActive.interest;
 
-    this.setState({interests: newInterestList});
+    if (error) {
+      return (
+        <Item style={styles.interestItem}>
+          <Text style={{color: 'red'}}>Erreur...</Text>
+        </Item>
+      );
+    }
+    else if (fulfilled) {
+      if (interests.length > 0) {
+        return interests.map((interest) => {
+          const destroying = (interestActive === interest);
+
+          return (
+            <Item
+              key={interest.id}
+              style={styles.interestItem}
+            >
+              <Text style={styles.textBlack}>{interest.name}</Text>
+              {
+                !destroying &&
+                <Button dark transparent onPress={() => this.props.destroyInterest(interest.id)}>
+                  <Icon name="close" />
+                </Button>
+              }
+              {destroying && <Loader />}
+            </Item>
+          );
+        });
+      }
+      else {
+        return (
+          <Item style={styles.interestItem}>
+            <Text style={styles.newsLink}>Aucun intérêt</Text>
+          </Item>
+        );
+      }
+    }
+    else {
+      return (
+        <Item style={styles.interestItem}>
+          <Loader />
+        </Item>
+      );
+    }
   }
 
   render() { // eslint-disable-line class-methods-use-this
@@ -62,21 +106,7 @@ class InterestForm extends Component { // eslint-disable-line
               />
             </Item>
           </Form>
-          {
-            this.state.interests.map((interest, index) => {
-              return (
-                <Item
-                  key={index}
-                  style={styles.interestItem}
-                >
-                  <Text style={styles.textBlack}>{interest}</Text>
-                  <Button dark transparent onPress={() => this.removeInterest(index)}>
-                    <Icon name="close" />
-                  </Button>
-                </Item>
-              );
-            })
-          }
+          {this.renderInterests()}
           <Button block rounded bordered style={styles.btnSubmit}>
             <Text>Enregistrer</Text>
           </Button>
@@ -89,6 +119,16 @@ class InterestForm extends Component { // eslint-disable-line
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
+  interestList: state.interests.interestList,
+  interestActive: state.interests.interestActive,
 });
 
-export default connect(mapStateToProps, null)(InterestForm);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    destroyInterest: (id) => {
+      return dispatch(destroyInterest(id))
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InterestForm);
