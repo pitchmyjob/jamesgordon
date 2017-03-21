@@ -34,7 +34,7 @@ class ExperienceList extends Component { // eslint-disable-line
   renderExperiences() {
     return experiences.map((experience, index) => {
       return (
-        <ListItem key={index} style={styles.experience}>
+        <ListItem key={index} style={styles.experience} onPress={() => this.pushRoute('experienceForm')}>
           <Text style={styles.experienceText}>{experience}</Text>
         </ListItem>
       )
@@ -47,7 +47,7 @@ class ExperienceList extends Component { // eslint-disable-line
           <HeaderContent hasBackButton={true} subtitle={'Expériences'} />
           <Content>
             {this.renderExperiences()}
-            <Button block rounded bordered style={styles.btnAdd}>
+            <Button block rounded bordered style={styles.btnAdd} onPress={() => this.pushRoute('experienceForm')}>
               <Text>Ajouter</Text>
             </Button>
           </Content>

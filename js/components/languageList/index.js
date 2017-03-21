@@ -34,7 +34,7 @@ class LanguageList extends Component { // eslint-disable-line
   renderLanguages() {
     return languages.map((language, index) => {
       return (
-        <ListItem key={index} style={styles.language}>
+        <ListItem key={index} style={styles.language} onPress={() => this.pushRoute('languageForm')}>
           <Text style={styles.languageText}>{language}</Text>
         </ListItem>
       )
@@ -50,7 +50,7 @@ class LanguageList extends Component { // eslint-disable-line
           />
           <Content>
             {this.renderLanguages()}
-            <Button block rounded bordered style={styles.btnAdd}>
+            <Button block rounded bordered style={styles.btnAdd} onPress={() => this.pushRoute('languageForm')}>
               <Text>Ajouter</Text>
             </Button>
           </Content>

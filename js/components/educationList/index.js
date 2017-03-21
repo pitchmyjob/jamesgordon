@@ -34,7 +34,7 @@ class EducationList extends Component { // eslint-disable-line
   renderEducations() {
     return educations.map((education, index) => {
       return (
-        <ListItem key={index} style={styles.education}>
+        <ListItem key={index} style={styles.education} onPress={() => this.pushRoute('educationForm')}>
           <Text style={styles.educationText}>{education}</Text>
         </ListItem>
       )
@@ -47,7 +47,7 @@ class EducationList extends Component { // eslint-disable-line
           <HeaderContent hasBackButton={true} subtitle={'Formations'} />
           <Content>
             {this.renderEducations()}
-            <Button block rounded bordered style={styles.btnAdd}>
+            <Button block rounded bordered style={styles.btnAdd} onPress={() => this.pushRoute('educationForm')}>
               <Text>Ajouter</Text>
             </Button>
           </Content>

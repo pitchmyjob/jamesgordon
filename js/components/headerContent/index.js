@@ -47,7 +47,7 @@ class HeaderContent extends Component {
           {
             subtitle &&
             <Subtitle>
-              <Text style={styles.headerSubtitle}>{subtitle}</Text>
+              <Text>{subtitle}</Text>
             </Subtitle>
           }
         </Body>
