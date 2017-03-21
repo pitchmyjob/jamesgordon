@@ -10,6 +10,12 @@ import FooterContent from './../footerContent';
 import Loader from './../loader';
 import styles from './styles';
 
+import { listExperience } from '../../actions/experiences'
+import { listEducation } from '../../actions/educations'
+import { listSkill } from '../../actions/skills'
+import { listLanguage } from '../../actions/languages'
+import { listInterest } from '../../actions/interests'
+
 const { pushRoute } = actions;
 
 class Profile extends Component { // eslint-disable-line
@@ -25,10 +31,132 @@ class Profile extends Component { // eslint-disable-line
     super(props);
 
     this.pushRoute = this.pushRoute.bind(this);
+    this.renderExperiences = this.renderExperiences.bind(this);
+    this.renderEducations = this.renderEducations.bind(this);
+    this.renderLanguages = this.renderLanguages.bind(this);
+    this.renderSkills = this.renderSkills.bind(this);
+    this.renderInterests = this.renderInterests.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.listExperience();
+    this.props.listEducation();
+    this.props.listSkill();
+    this.props.listLanguage();
+    this.props.listInterest();
   }
 
   pushRoute(route) {
     this.props.pushRoute({ key: route, index: 1 }, this.props.navigation.key);
+  }
+
+  renderExperiences() {
+    const { fetching, fulfilled, error, experiences } = this.props.experiences
+
+    if (error) {
+      return <Text style={{color: 'red'}}>Erreur...</Text>
+    }
+    else if (fulfilled) {
+      if (experiences.length > 0) {
+        return experiences.map((experience) => {
+          return <Text key={experience.id} style={styles.newsLink}>{experience.company}</Text>
+        });
+      }
+      else {
+        return <Text style={styles.newsLink}>Aucune expérience</Text>
+      }
+    }
+    else {
+      return <Loader />
+    }
+  }
+
+  renderEducations() {
+    const { fetching, fulfilled, error, educations } = this.props.educations
+
+    if (error) {
+      return <Text style={{color: 'red'}}>Erreur...</Text>
+    }
+    else if (fulfilled) {
+      if (educations.length > 0) {
+        return educations.map((education) => {
+          return <Text key={education.id} style={styles.newsLink}>{education.school}</Text>
+        });
+      }
+      else {
+        return <Text style={styles.newsLink}>Aucune formation</Text>
+      }
+    }
+    else {
+      return <Loader />
+    }
+  }
+
+  renderSkills() {
+    const { fetching, fulfilled, error, skills } = this.props.skills
+
+    if (error) {
+      return <Text style={{color: 'red'}}>Erreur...</Text>
+    }
+    else if (fulfilled) {
+      if (skills.length > 0) {
+        const skillList = skills.map((skill) => {
+          return skill.name;
+        });
+
+        return <Text style={styles.newsLink}>{skillList.join(', ')}</Text>;
+      }
+      else {
+        return <Text style={styles.newsLink}>Aucune compétence</Text>
+      }
+    }
+    else {
+      return <Loader />
+    }
+  }
+
+  renderLanguages() {
+    const { fetching, fulfilled, error, languages } = this.props.languages
+
+    if (error) {
+      return <Text style={{color: 'red'}}>Erreur...</Text>
+    }
+    else if (fulfilled) {
+      if (languages.length > 0) {
+        return languages.map((language) => {
+          return <Text key={language.id} style={styles.newsLink}>{language.name}</Text>
+        });
+      }
+      else {
+        return <Text style={styles.newsLink}>Aucune langue</Text>
+      }
+    }
+    else {
+      return <Loader />
+    }
+  }
+
+  renderInterests() {
+    const { fetching, fulfilled, error, interests } = this.props.interests
+
+    if (error) {
+      return <Text style={{color: 'red'}}>Erreur...</Text>
+    }
+    else if (fulfilled) {
+      if (interests.length > 0) {
+        const interestList = interests.map((interest) => {
+          return interest.name;
+        });
+
+        return <Text style={styles.newsLink}>{interestList.join(', ')}</Text>;
+      }
+      else {
+        return <Text style={styles.newsLink}>Aucun intérêt</Text>
+      }
+    }
+    else {
+      return <Loader />
+    }
   }
 
   render() { // eslint-disable-line class-methods-use-this
@@ -71,8 +199,7 @@ class Profile extends Component { // eslint-disable-line
                   <Text style={styles.newsHeader}>
                     Mes expériences
                   </Text>
-                  <Text style={styles.newsLink}>Dailymotion</Text>
-                  <Text style={styles.newsLink}>Weezevent</Text>
+                  {this.renderExperiences()}
                 </Body>
                 <Right>
                   <Icon name="arrow-forward" style={styles.newsIcon} />
@@ -86,8 +213,7 @@ class Profile extends Component { // eslint-disable-line
                   <Text style={styles.newsHeader}>
                     Mes formations
                   </Text>
-                  <Text style={styles.newsLink}>Makina Corpus</Text>
-                  <Text style={styles.newsLink}>ESGI</Text>
+                  {this.renderEducations()}
                 </Body>
                 <Right>
                   <Icon name="arrow-forward" style={styles.newsIcon} />
@@ -101,7 +227,7 @@ class Profile extends Component { // eslint-disable-line
                   <Text style={styles.newsHeader}>
                     Mes compétences
                   </Text>
-                  <Text style={styles.newsLink}>Python, Django, SQL, GraphQL</Text>
+                  {this.renderSkills()}
                 </Body>
                 <Right>
                   <Icon name="arrow-forward" style={styles.newsIcon} />
@@ -115,8 +241,7 @@ class Profile extends Component { // eslint-disable-line
                   <Text style={styles.newsHeader}>
                     Mes langues
                   </Text>
-                  <Text style={styles.newsLink}>Français</Text>
-                  <Text style={styles.newsLink}>Anglais</Text>
+                  {this.renderLanguages()}
                 </Body>
                 <Right>
                   <Icon name="arrow-forward" style={styles.newsIcon} />
@@ -130,7 +255,7 @@ class Profile extends Component { // eslint-disable-line
                   <Text style={styles.newsHeader}>
                     Mes intérêts
                   </Text>
-                  <Text style={styles.newsLink}>Rugby, cinéma, série, sport</Text>
+                  {this.renderInterests()}
                 </Body>
                 <Right>
                   <Icon name="arrow-forward" style={styles.newsIcon} />
@@ -147,12 +272,34 @@ class Profile extends Component { // eslint-disable-line
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
+  experiences: state.experiences.experienceList,
+  educations: state.educations.educationList,
+  skills: state.skills.skillList,
+  languages: state.languages.languageList,
+  interests: state.interests.interestList,
 });
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
-    pushRoute: (route, key) => dispatch(pushRoute(route, key)),
-  };
+    pushRoute: (route, key) => {
+      return dispatch(pushRoute(route, key))
+    },
+    listExperience: () => {
+      return dispatch(listExperience())
+    },
+    listEducation: () => {
+      return dispatch(listEducation())
+    },
+    listSkill: () => {
+      return dispatch(listSkill())
+    },
+    listLanguage: () => {
+      return dispatch(listLanguage())
+    },
+    listInterest: () => {
+      return dispatch(listInterest())
+    },
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

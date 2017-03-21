@@ -5,7 +5,10 @@ import { Container, Content, Text, Form, Item, Input, Label, Button, Icon } from
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
+import Loader from './../loader';
 import styles from './styles';
+
+import { destroySkill } from '../../actions/skills'
 
 class SkillForm extends Component { // eslint-disable-line
 
@@ -19,12 +22,11 @@ class SkillForm extends Component { // eslint-disable-line
     super(props);
 
     this.state = {
-      skills: ['Python', 'Django'],
       skill: '',
     };
 
     this.addSkill = this.addSkill.bind(this);
-    this.removeSkill = this.removeSkill.bind(this);
+    this.renderSkills = this.renderSkills.bind(this);
   }
 
   addSkill(event) {
@@ -36,12 +38,54 @@ class SkillForm extends Component { // eslint-disable-line
     this.setState({ skill: '' });
   }
 
-  removeSkill(index) {
-    const newSkillList = this.state.skills.filter((skill, indexList) => {
-      return indexList !== index;
-    });
+  renderSkills() {
+    const { fetching, fulfilled, error, skills } = this.props.skillList;
+    const skillActive = this.props.skillActive.skill;
 
-    this.setState({skills: newSkillList});
+    if (error) {
+      return (
+        <Item style={styles.skillItem}>
+          <Text style={{color: 'red'}}>Erreur...</Text>
+        </Item>
+      );
+    }
+    else if (fulfilled) {
+      if (skills.length > 0) {
+        return skills.map((skill) => {
+          const destroying = (skillActive === skill);
+
+          return (
+            <Item
+              key={skill.id}
+              style={styles.skillItem}
+            >
+              <Text style={styles.textBlack}>{skill.name}</Text>
+              {
+                !destroying &&
+                <Button dark transparent onPress={() => this.props.destroySkill(skill.id)}>
+                  <Icon name="close" />
+                </Button>
+              }
+              {destroying && <Loader />}
+            </Item>
+          );
+        });
+      }
+      else {
+        return (
+          <Item style={styles.skillItem}>
+            <Text style={styles.newsLink}>Aucune compétence</Text>
+          </Item>
+        );
+      }
+    }
+    else {
+      return (
+        <Item style={styles.skillItem}>
+          <Loader />
+        </Item>
+      );
+    }
   }
 
   render() { // eslint-disable-line class-methods-use-this
@@ -62,21 +106,7 @@ class SkillForm extends Component { // eslint-disable-line
               />
             </Item>
           </Form>
-          {
-            this.state.skills.map((skill, index) => {
-              return (
-                <Item
-                  key={index}
-                  style={styles.skillItem}
-                >
-                  <Text style={styles.textBlack}>{skill}</Text>
-                  <Button dark transparent onPress={() => this.removeSkill(index)}>
-                    <Icon name="close" />
-                  </Button>
-                </Item>
-              );
-            })
-          }
+          {this.renderSkills()}
           <Button block rounded bordered style={styles.btnSubmit}>
             <Text>Enregistrer</Text>
           </Button>
@@ -89,6 +119,16 @@ class SkillForm extends Component { // eslint-disable-line
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
+  skillList: state.skills.skillList,
+  skillActive: state.skills.skillActive,
 });
 
-export default connect(mapStateToProps, null)(SkillForm);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    destroySkill: (id) => {
+      return dispatch(destroySkill(id))
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SkillForm);
