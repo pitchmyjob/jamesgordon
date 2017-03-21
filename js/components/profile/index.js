@@ -7,6 +7,7 @@ import { Grid, Col, Row } from 'react-native-easy-grid';
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
+import Loader from './../loader';
 import styles from './styles';
 
 const { pushRoute } = actions;
@@ -92,7 +93,7 @@ class Profile extends Component { // eslint-disable-line
                   <Icon name="arrow-forward" style={styles.newsIcon} />
                 </Right>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.itemContainer}>
+              <TouchableOpacity style={styles.itemContainer} onPress={() => this.pushRoute('skillForm')}>
                 <Left>
                   <Icon name="star-half" style={styles.newsIcon} />
                 </Left>
@@ -121,7 +122,7 @@ class Profile extends Component { // eslint-disable-line
                   <Icon name="arrow-forward" style={styles.newsIcon} />
                 </Right>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.itemContainer}>
+              <TouchableOpacity style={styles.itemContainer} onPress={() => this.pushRoute('interestForm')}>
                 <Left>
                   <Icon name="beer" style={styles.newsIcon} />
                 </Left>
