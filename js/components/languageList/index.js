@@ -5,6 +5,7 @@ import { Container, Content, ListItem, Text, Button } from 'native-base';
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
+import Loader from './../loader';
 import styles from './styles';
 
 const { pushRoute } = actions;
@@ -32,13 +33,36 @@ class LanguageList extends Component { // eslint-disable-line
   }
 
   renderLanguages() {
-    return languages.map((language, index) => {
+    const { fetching, fulfilled, error, languages } = this.props.languages;
+
+    if (error) {
       return (
-        <ListItem key={index} style={styles.language} onPress={() => this.pushRoute('languageForm')}>
-          <Text style={styles.languageText}>{language}</Text>
+        <ListItem style={styles.language}>
+          <Text style={{color: 'red'}}>Erreur...</Text>
         </ListItem>
-      )
-    })
+      );
+    }
+    else if (fulfilled) {
+      if (languages.length > 0) {
+        return languages.map((language) => {
+          return (
+            <ListItem key={language.id} style={styles.language} onPress={() => this.pushRoute('languageForm')}>
+              <Text style={styles.languageText}>{language.name}</Text>
+            </ListItem>
+          );
+        });
+      }
+      else {
+        return (
+          <ListItem style={styles.language}>
+            <Text style={styles.languageText}>Aucune langue</Text>
+          </ListItem>
+        );
+      }
+    }
+    else {
+      return <Loader />;
+    }
   }
 
   render() { // eslint-disable-line class-methods-use-this
@@ -62,6 +86,7 @@ class LanguageList extends Component { // eslint-disable-line
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
+  languages: state.languages.languageList,
 });
 
 function mapDispatchToProps(dispatch) {
