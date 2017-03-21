@@ -7,16 +7,14 @@ export default {
     height: null,
   },
   deck: {
-    marginTop: 30,
-    marginLeft: 30,
-    marginRight: 30,
+    paddingTop: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
-  blackColor: {
+  textBlack: {
     color: 'black',
   },
-  headerCard: {
-    color: 'black',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  }
+  heartIcon: {
+    color: 'red',
+  },
 };

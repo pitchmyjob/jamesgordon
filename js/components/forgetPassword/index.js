@@ -48,7 +48,7 @@ class ForgetPassword extends Component {
               </Item>
               <Text style={styles.separatorText}>ou</Text>
               <Item rounded style={styles.inputGrp}>
-                <Icon name="phone" />
+                <Icon name="phone-portrait" />
                 <Input
                   placeholder="Numéro de téléphone"
                   placeholderTextColor="#fff"

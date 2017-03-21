@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { actions } from 'react-native-navigation-redux-helpers';
 import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 
 import styles from './styles';
 
+const { replaceAtIndex } = actions;
+
 class FooterContent extends Component {
 
   static propTypes = {
+    replaceAtIndex: React.PropTypes.func,
     navigation: React.PropTypes.shape({
       key: React.PropTypes.string,
     }),
@@ -21,10 +25,18 @@ class FooterContent extends Component {
 
     this.handleFooterTabClick = this.handleFooterTabClick.bind(this);
     this.isActiveFooterTab = this.isActiveFooterTab.bind(this);
+    this.replaceRoute = this.replaceRoute.bind(this);
+  }
+
+  replaceRoute(route) {
+    const navigation = this.props.navigation;
+
+    this.props.replaceAtIndex(navigation.index, { key: route }, navigation.key);
   }
 
   handleFooterTabClick(tabName) {
     this.setState({activeFooterTab: tabName});
+    this.replaceRoute(tabName);
   }
 
   isActiveFooterTab(tabName) {
@@ -57,4 +69,10 @@ const mapStateToProps = state => ({
   navigation: state.cardNavigation,
 });
 
-export default connect(mapStateToProps, null)(FooterContent);
+function mapDispatchToProps(dispatch) {
+  return {
+    replaceAtIndex: (index, route, key) => dispatch(replaceAtIndex(index, route, key)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FooterContent);

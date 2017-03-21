@@ -10,46 +10,49 @@ const cards = [
   {
     matchingScore: 92,
     job: {
-      'company': {
+      company: {
         'name': 'airbnb',
         'logo': require('../../../images/companies/company-logo-1.png'),
       },
       title: 'CTO',
-      'address': 'Paris 18e',
-      'description': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque necessitatibus quam amet mollitia consequatur iste.',
-      'created': '2 jours',
-      'skills': ['php', 'aws'],
-      'contractTypes': ['CDI', 'CDD'],
+      address: 'Paris 18e',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque necessitatibus quam amet mollitia consequatur iste.',
+      created: '2 jours',
+      skills: ['php', 'aws'],
+      contractTypes: ['CDI', 'CDD'],
+      liked: false,
     },
   },
   {
     matchingScore: 82,
     job: {
-      'company': {
+      company: {
         'name': 'Dailymotion',
         'logo': require('../../../images/companies/company-logo-2.png'),
       },
       title: 'Développeur Python backend',
-      'address': 'Aubervilliers',
-      'description': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque necessitatibus quam amet mollitia consequatur iste.',
-      'created': '4 jours',
-      'skills': ['python', 'graphQL'],
-      'contractTypes': ['CDD'],
+      address: 'Aubervilliers',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque necessitatibus quam amet mollitia consequatur iste.',
+      created: '4 jours',
+      skills: ['python', 'graphQL'],
+      contractTypes: ['CDD'],
+      liked: true,
     },
   },
   {
     matchingScore: 50,
     job: {
-      'company': {
+      company: {
         'name': 'Uber',
         'logo': require('../../../images/companies/company-logo-3.png'),
       },
       title: 'Développeur Windaube',
-      'address': 'Marseille',
-      'description': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque necessitatibus quam amet mollitia consequatur iste.',
-      'created': '5 jours',
-      'skills': ['C#'],
-      'contractTypes': ['CDI'],
+      address: 'Marseille',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque necessitatibus quam amet mollitia consequatur iste.',
+      created: '5 jours',
+      skills: ['C#'],
+      contractTypes: ['CDI'],
+      liked: false,
     },
   },
 ];
@@ -65,60 +68,69 @@ class Matching extends Component { // eslint-disable-line
   constructor(props) {
     super(props);
 
-    this.renderCard = this.renderCard.bind(this);
+    this.renderCards = this.renderCards.bind(this);
   }
 
-  renderCard(item) {
-    return (
-      <Card style={{ elevation: 3 }}>
-        <CardItem bordered>
-          <Left>
-            <Thumbnail source={item.job.company.logo} />
-          </Left>
-          <Body>
-            <Text style={styles.blackColor}>{item.job.company.name}</Text>
-            <Text note>{item.job.title}</Text>
-            <Text note>
-              {item.job.contractTypes.join(', ')}
-            </Text>
-          </Body>
-          <Right>
-            <Text style={styles.blackColor}>{item.matchingScore}%</Text>
-          </Right>
-        </CardItem>
-        <CardItem>
-          <Text style={styles.blackColor}>{item.job.description}</Text>
-        </CardItem>
-          {/*<Text style={styles.blackColor}>{item.job.address}</Text>
-          <Text style={styles.blackColor}>il y a {item.job.created}</Text>
-          <Text style={styles.blackColor}>Compétences recherchées : {item.job.skills.join(', ')}</Text>
-        </CardItem>*/}
-        <CardItem bordered>
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Button transparent>
-              <Icon name="heart" />
-            </Button>
-            <Button transparent>
-              <Icon name="camera" />
-            </Button>
-            <Button transparent>
-              <Icon name="trash" />
-            </Button>
-          </View>
-        </CardItem>
-      </Card>
-    );
+  renderCards(item) {
+    return cards.map((item, index) => {
+      return (
+        <Card key={index}>
+          <CardItem bordered>
+            <Left>
+              <Thumbnail source={item.job.company.logo} />
+            </Left>
+            <Body>
+              <Text style={styles.textBlack}>{item.job.company.name}</Text>
+              <Text note>{item.job.title}</Text>
+              <Text note>
+                {item.job.contractTypes.join(', ')}
+              </Text>
+            </Body>
+            <Right>
+              <Text note>{item.matchingScore}%</Text>
+            </Right>
+          </CardItem>
+          <CardItem>
+            <Body>
+              <Text style={styles.textBlack}>{item.job.description}</Text>
+            </Body>
+          </CardItem>
+          <CardItem>
+            <Body>
+              <Text note>Compétences : {item.job.skills.join(', ')}</Text>
+            </Body>
+          </CardItem>
+          <CardItem>
+            <Body>
+              <Text note>{item.job.address}</Text>
+              <Text note>{item.job.created}</Text>
+            </Body>
+            <Right>
+              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Button transparent>
+                  <Icon name="heart" style={styles.heartIcon} active={item.job.liked} />
+                </Button>
+                <Button transparent>
+                  <Icon name="camera" />
+                </Button>
+                <Button transparent>
+                  <Icon name="trash" />
+                </Button>
+              </View>
+            </Right>
+          </CardItem>
+        </Card>
+      );
+    });
   }
+
   render() { // eslint-disable-line class-methods-use-this
     return (
       <Container>
         <View style={styles.container}>
           <HeaderContent />
           <Content style={styles.deck}>
-            <DeckSwiper
-              dataSource={cards}
-              renderItem={this.renderCard}
-            />
+            {this.renderCards()}
           </Content>
           <FooterContent />
         </View>
