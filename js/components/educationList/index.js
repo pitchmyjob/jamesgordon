@@ -5,6 +5,7 @@ import { Container, Content, ListItem, Text, Button } from 'native-base';
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
+import Loader from './../loader';
 import styles from './styles';
 
 const { pushRoute } = actions;
@@ -32,13 +33,36 @@ class EducationList extends Component { // eslint-disable-line
   }
 
   renderEducations() {
-    return educations.map((education, index) => {
+    const { fetching, fulfilled, error, educations } = this.props.educations;
+
+    if (error) {
       return (
-        <ListItem key={index} style={styles.education} onPress={() => this.pushRoute('educationForm')}>
-          <Text style={styles.educationText}>{education}</Text>
+        <ListItem style={styles.education}>
+          <Text style={{color: 'red'}}>Erreur...</Text>
         </ListItem>
-      )
-    })
+      );
+    }
+    else if (fulfilled) {
+      if (educations.length > 0) {
+        return educations.map((education) => {
+          return (
+            <ListItem key={education.id} style={styles.education} onPress={() => this.pushRoute('educationForm')}>
+              <Text style={styles.educationText}>{education.school}</Text>
+            </ListItem>
+          );
+        });
+      }
+      else {
+        return (
+          <ListItem style={styles.education}>
+            <Text style={styles.educationText}>Aucune formation</Text>
+          </ListItem>
+        );
+      }
+    }
+    else {
+      return <Loader />;
+    }
   }
 
   render() { // eslint-disable-line class-methods-use-this
@@ -59,6 +83,7 @@ class EducationList extends Component { // eslint-disable-line
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
+  educations: state.educations.educationList,
 });
 
 function mapDispatchToProps(dispatch) {
