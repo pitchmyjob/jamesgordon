@@ -35,6 +35,7 @@ class Profile extends Component { // eslint-disable-line
     this.renderEducations = this.renderEducations.bind(this);
     this.renderLanguages = this.renderLanguages.bind(this);
     this.renderSkills = this.renderSkills.bind(this);
+    this.renderInterests = this.renderInterests.bind(this);
   }
 
   componentDidMount() {
@@ -150,7 +151,7 @@ class Profile extends Component { // eslint-disable-line
         return <Text style={styles.newsLink}>{interestList.join(', ')}</Text>;
       }
       else {
-        return <Text style={styles.newsLink}>Aucun intérêts</Text>
+        return <Text style={styles.newsLink}>Aucun intérêt</Text>
       }
     }
     else {
@@ -254,7 +255,7 @@ class Profile extends Component { // eslint-disable-line
                   <Text style={styles.newsHeader}>
                     Mes intérêts
                   </Text>
-                  <Text style={styles.newsLink}>Rugby, cinéma, série, sport</Text>
+                  {this.renderInterests()}
                 </Body>
                 <Right>
                   <Icon name="arrow-forward" style={styles.newsIcon} />
