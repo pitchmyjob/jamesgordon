@@ -74,7 +74,7 @@ class SkillForm extends Component { // eslint-disable-line
       else {
         return (
           <Item style={styles.skillItem}>
-            <Text style={styles.newsLink}>Aucun intérêt</Text>
+            <Text style={styles.newsLink}>Aucune compétence</Text>
           </Item>
         );
       }
