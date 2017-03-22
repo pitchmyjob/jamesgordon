@@ -1,6 +1,6 @@
 import request from '../utils/request'
 
-import { LIST_SKILL, DESTROY_SKILL } from '../constants/skills'
+import { LIST_SKILL, DESTROY_SKILL, CREATE_SKILL } from '../constants/skills'
 
 export const listSkill = () => {
     return {
@@ -16,5 +16,12 @@ export const destroySkill = (id) => {
         meta: {
             id: id,
         },
+    }
+}
+
+export const createSkill = (values) => {
+    return {
+        type: CREATE_SKILL,
+        payload: request.post('/applicantskills/', values)
     }
 }
