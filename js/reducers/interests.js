@@ -1,5 +1,6 @@
 import { LIST_INTEREST_PENDING, LIST_INTEREST_FULFILLED, LIST_INTEREST_REJECTED,
-         DESTROY_INTEREST_PENDING, DESTROY_INTEREST_FULFILLED, DESTROY_INTEREST_REJECTED
+         DESTROY_INTEREST_PENDING, DESTROY_INTEREST_FULFILLED, DESTROY_INTEREST_REJECTED,
+         CREATE_INTEREST_FULFILLED
 } from '../constants/interests'
 
 const INITIAL_STATE = {
@@ -24,6 +25,13 @@ export default (state=INITIAL_STATE, action) => {
             return {...state, interestActive: {pending: false, fulfilled: true, error: null, interest: null}, interestList: {...state.interestList, interests: state.interestList.interests.filter((interest) => { return interest.id !== action.meta.id })}}
         case DESTROY_INTEREST_REJECTED:
             return {...state, interestActive: {pending: false, fulfilled: false, error: action.payload.response, interest: null}}
+
+        // CREATE
+        case CREATE_INTEREST_FULFILLED:
+            return {
+                ...state,
+                interestList: {...state.interestList, interests: state.interestList.interests.concat(action.payload.data)},
+            }
 
         default:
             return state
