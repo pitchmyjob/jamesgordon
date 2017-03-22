@@ -7,6 +7,6 @@ export const renderInput = (field) => {
     const { onChange } = input;
 
     return (
-        <Input onChangeText={onChange} {...props} />
+        <Input onChangeText={onChange} {...input} {...props} />
     );
 };
