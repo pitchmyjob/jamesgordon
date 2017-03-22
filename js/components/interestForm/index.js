@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form'
 import { View } from 'react-native';
 import { Container, Content, Text, Form, Item, Input, Label, Button, Icon } from 'native-base';
 
@@ -8,7 +9,8 @@ import FooterContent from './../footerContent';
 import Loader from './../loader';
 import styles from './styles';
 
-import { destroyInterest } from '../../actions/interests'
+import { destroyInterest, createInterest } from '../../actions/interests'
+import { renderInput } from '../../utils/forms/renderers'
 
 class InterestForm extends Component { // eslint-disable-line
 
@@ -21,21 +23,7 @@ class InterestForm extends Component { // eslint-disable-line
   constructor(props) {
     super(props);
 
-    this.state = {
-      interest: '',
-    };
-
-    this.addInterest = this.addInterest.bind(this);
     this.renderInterests = this.renderInterests.bind(this);
-  }
-
-  addInterest(event) {
-    if (!this.state.interests.includes(this.state.interest)) {
-      const newInterestList = this.state.interests.concat(this.state.interest);
-      this.setState({interests: newInterestList});
-    }
-
-    this.setState({ interest: '' });
   }
 
   renderInterests() {
@@ -89,6 +77,8 @@ class InterestForm extends Component { // eslint-disable-line
   }
 
   render() { // eslint-disable-line class-methods-use-this
+    const { handleSubmit } = this.props;
+
     return (
       <Container>
         <HeaderContent
@@ -97,19 +87,16 @@ class InterestForm extends Component { // eslint-disable-line
         />
         <Content style={styles.container}>
           <Form style={styles.formContainer}>
-            <Item floatingLabel style={styles.formInput}>
+            <Item stackedLabel style={styles.formInput}>
               <Label>Saisissez un intérêt</Label>
-              <Input
-                onSubmitEditing={this.addInterest}
-                onChangeText={interest => this.setState({ interest })}
-                value={this.state.interest}
+              <Field
+                name="name"
+                component={renderInput}
+                onSubmitEditing={handleSubmit}
               />
             </Item>
           </Form>
           {this.renderInterests()}
-          <Button block rounded bordered style={styles.btnSubmit}>
-            <Text>Enregistrer</Text>
-          </Button>
         </Content>
         <FooterContent currentTab={'profile'} />
       </Container>
@@ -131,4 +118,14 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InterestForm);
+const config = {
+  form: 'InterestForm',
+  onSubmit: (values, dispatch, props) => {
+    return dispatch(createInterest(values))
+      .then((response) => {
+        props.reset()
+      })
+  },
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(reduxForm(config)(InterestForm));
