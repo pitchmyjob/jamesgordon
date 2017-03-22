@@ -28,8 +28,8 @@ class ExperienceList extends Component { // eslint-disable-line
     this.renderExperiences = this.renderExperiences.bind(this);
   }
 
-  pushRoute(route) {
-    this.props.pushRoute({ key: route, index: 1 }, this.props.navigation.key);
+  pushRoute(route, experienceId = null) {
+    this.props.pushRoute({ key: route, experienceId: experienceId }, this.props.navigation.key);
   }
 
   renderExperiences() {
@@ -46,7 +46,7 @@ class ExperienceList extends Component { // eslint-disable-line
       if (experiences.length > 0) {
         return experiences.map((experience) => {
           return (
-            <ListItem key={experience.id} style={styles.experience} onPress={() => this.pushRoute('experienceForm')}>
+            <ListItem key={experience.id} style={styles.experience} onPress={() => this.pushRoute('experienceForm', experience.id)}>
               <Text style={styles.experienceText}>{experience.company}</Text>
             </ListItem>
           );

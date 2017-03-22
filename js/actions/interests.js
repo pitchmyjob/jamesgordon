@@ -1,6 +1,6 @@
 import request from '../utils/request'
 
-import { LIST_INTEREST, DESTROY_INTEREST } from '../constants/interests'
+import { LIST_INTEREST, DESTROY_INTEREST, CREATE_INTEREST } from '../constants/interests'
 
 export const listInterest = () => {
     return {
@@ -16,5 +16,12 @@ export const destroyInterest = (id) => {
         meta: {
             id: id,
         },
+    }
+}
+
+export const createInterest = (values) => {
+    return {
+        type: CREATE_INTEREST,
+        payload: request.post('/applicantinterests/', values)
     }
 }

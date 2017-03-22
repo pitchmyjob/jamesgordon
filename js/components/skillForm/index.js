@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form'
 import { View } from 'react-native';
 import { Container, Content, Text, Form, Item, Input, Label, Button, Icon } from 'native-base';
 
@@ -8,7 +9,8 @@ import FooterContent from './../footerContent';
 import Loader from './../loader';
 import styles from './styles';
 
-import { destroySkill } from '../../actions/skills'
+import { destroySkill, createSkill } from '../../actions/skills'
+import { renderInput } from '../../utils/forms/renderers'
 
 class SkillForm extends Component { // eslint-disable-line
 
@@ -21,21 +23,7 @@ class SkillForm extends Component { // eslint-disable-line
   constructor(props) {
     super(props);
 
-    this.state = {
-      skill: '',
-    };
-
-    this.addSkill = this.addSkill.bind(this);
     this.renderSkills = this.renderSkills.bind(this);
-  }
-
-  addSkill(event) {
-    if (!this.state.skills.includes(this.state.skill)) {
-      const newSkillList = this.state.skills.concat(this.state.skill);
-      this.setState({skills: newSkillList});
-    }
-
-    this.setState({ skill: '' });
   }
 
   renderSkills() {
@@ -89,6 +77,8 @@ class SkillForm extends Component { // eslint-disable-line
   }
 
   render() { // eslint-disable-line class-methods-use-this
+    const { handleSubmit } = this.props;
+
     return (
       <Container>
         <HeaderContent
@@ -97,19 +87,12 @@ class SkillForm extends Component { // eslint-disable-line
         />
         <Content style={styles.container}>
           <Form style={styles.formContainer}>
-            <Item floatingLabel style={styles.formInput}>
+            <Item stackedLabel style={styles.formInput}>
               <Label>Saisissez une compétence</Label>
-              <Input
-                onSubmitEditing={this.addSkill}
-                onChangeText={skill => this.setState({ skill })}
-                value={this.state.skill}
-              />
+              <Field name="name" onSubmitEditing={handleSubmit} component={renderInput} />
             </Item>
           </Form>
           {this.renderSkills()}
-          <Button block rounded bordered style={styles.btnSubmit}>
-            <Text>Enregistrer</Text>
-          </Button>
         </Content>
         <FooterContent currentTab={'profile'} />
       </Container>
@@ -131,4 +114,14 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SkillForm);
+const config = {
+  form: 'SkillForm',
+  onSubmit: (values, dispatch, props) => {
+    return dispatch(createSkill(values))
+      .then((response) => {
+        props.reset()
+      })
+  },
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(reduxForm(config)(SkillForm));

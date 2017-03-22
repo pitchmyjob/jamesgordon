@@ -105,7 +105,7 @@ class AppNavigator extends Component {
       case 'experienceList':
         return <ExperienceList />;
       case 'experienceForm':
-        return <ExperienceForm />;
+        return <ExperienceForm experienceId={props.scene.route.experienceId || null} />;
       case 'educationList':
         return <EducationList />;
       case 'educationForm':
