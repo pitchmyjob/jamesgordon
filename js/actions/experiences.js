@@ -1,6 +1,6 @@
 import request from '../utils/request'
 
-import { LIST_EXPERIENCE, CREATE_EXPERIENCE, UPDATE_EXPERIENCE } from '../constants/experiences'
+import { LIST_EXPERIENCE, CREATE_EXPERIENCE, UPDATE_EXPERIENCE, DESTROY_EXPERIENCE } from '../constants/experiences'
 
 export const listExperience = () => {
     return {
@@ -22,6 +22,16 @@ export const updateExperience = (experienceId, values) => {
         payload: request.put('/applicantexperiences/' + experienceId + '/', values),
         meta: {
             id: experienceId,
+        },
+    }
+}
+
+export const destroyExperience = (id) => {
+    return {
+        type: DESTROY_EXPERIENCE,
+        payload: request.delete('/applicantexperiences/' + id + '/'),
+        meta: {
+            id: id,
         },
     }
 }
