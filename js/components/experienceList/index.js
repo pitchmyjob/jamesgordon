@@ -29,7 +29,7 @@ class ExperienceList extends Component { // eslint-disable-line
   }
 
   pushRoute(route, experienceId = null) {
-    this.props.pushRoute({ key: route, experienceId: experienceId }, this.props.navigation.key);
+    this.props.pushRoute({ key: route, index: 1, experienceId: experienceId }, this.props.navigation.key);
   }
 
   renderExperiences() {
@@ -56,7 +56,7 @@ class ExperienceList extends Component { // eslint-disable-line
               <Right>
                 {
                   !destroying &&
-                  <Button transparant onPress={() => this.props.destroyExperience(experience.id)}>
+                  <Button transparent onPress={() => this.props.destroyExperience(experience.id)}>
                     <Icon name="trash" />
                   </Button>
                 }

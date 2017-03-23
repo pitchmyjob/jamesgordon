@@ -109,7 +109,7 @@ class AppNavigator extends Component {
       case 'educationList':
         return <EducationList />;
       case 'educationForm':
-        return <EducationForm />;
+        return <EducationForm educationId={props.scene.route.educationId || null} />;
       case 'languageList':
         return <LanguageList />;
       case 'languageForm':
