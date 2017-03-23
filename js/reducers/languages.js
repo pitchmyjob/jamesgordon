@@ -6,7 +6,7 @@ import { LIST_LANGUAGE_PENDING, LIST_LANGUAGE_FULFILLED, LIST_LANGUAGE_REJECTED,
 
 const INITIAL_STATE = {
     languageList: {pending: false, fulfilled: false, error: null, languages: []},
-    languageActive: {pending: false, fulfilled: false, error: null, language: null},
+    languageDestroy: {pending: false, fulfilled: false, error: null, languages: []},
 }
 
 export default (state=INITIAL_STATE, action) => {
@@ -45,11 +45,15 @@ export default (state=INITIAL_STATE, action) => {
 
         // DESTROY
         case DESTROY_LANGUAGE_PENDING:
-            return {...state, languageActive: {pending: true, fulfilled: false, error: null, language: state.languageList.languages.find((language) => { return language.id === action.meta.id })}}
+            return {...state, languageDestroy: {pending: true, fulfilled: false, error: null, languages: state.languageDestroy.languages.concat(action.meta.id)}}
         case DESTROY_LANGUAGE_FULFILLED:
-            return {...state, languageActive: {pending: false, fulfilled: true, error: null, language: null}, languageList: {...state.languageList, languages: state.languageList.languages.filter((language) => { return language.id !== action.meta.id })}}
+            return {
+                ...state,
+                languageDestroy: {pending: false, fulfilled: true, error: null, languages: state.languageDestroy.languages.filter(language => language.id !== action.meta.id)},
+                languageList: {...state.languageList, languages: state.languageList.languages.filter(language => language.id !== action.meta.id)},
+            }
         case DESTROY_LANGUAGE_REJECTED:
-            return {...state, languageActive: {pending: false, fulfilled: false, error: action.payload.response, language: null}}
+            return {...state, languageDestroy: {pending: false, fulfilled: false, error: action.payload.response, languages: state.languageDestroy.languages.filter(language => language.id !== action.meta.id)}}
 
         default:
             return state

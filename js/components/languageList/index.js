@@ -34,7 +34,7 @@ class LanguageList extends Component { // eslint-disable-line
 
   renderLanguages() {
     const { fetching, fulfilled, error, languages } = this.props.languageList;
-    const languageActive = this.props.languageActive.language;
+    const destroyingLanguages = this.props.languageDestroy.languages;
 
     if (error) {
       return (
@@ -46,7 +46,7 @@ class LanguageList extends Component { // eslint-disable-line
     else if (fulfilled) {
       if (languages.length > 0) {
         return languages.map((language) => {
-          const destroying = (languageActive === language);
+          const destroying = (destroyingLanguages.indexOf(language.id) !== -1);
 
           return (
             <ListItem key={language.id} style={styles.language} onPress={() => this.pushRoute('languageForm', language.id)}>
@@ -102,9 +102,8 @@ class LanguageList extends Component { // eslint-disable-line
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
-  languages: state.languages.languageList,
   languageList: state.languages.languageList,
-  languageActive: state.languages.languageActive,
+  languageDestroy: state.languages.languageDestroy,
 });
 
 function mapDispatchToProps(dispatch) {
