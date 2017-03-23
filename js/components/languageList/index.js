@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from 'react-native-navigation-redux-helpers';
-import { Container, Content, ListItem, Text, Button } from 'native-base';
+import { Container, Content, ListItem, Text, Button, Body, Right, Icon } from 'native-base';
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
 import Loader from './../loader';
 import styles from './styles';
 
-const { pushRoute } = actions;
+import { destroyLanguage } from '../../actions/languages'
 
-const languages = ['Français', 'Anglais'];
+const { pushRoute } = actions;
 
 class LanguageList extends Component { // eslint-disable-line
 
@@ -28,12 +28,13 @@ class LanguageList extends Component { // eslint-disable-line
     this.renderLanguages = this.renderLanguages.bind(this);
   }
 
-  pushRoute(route) {
-    this.props.pushRoute({ key: route, index: 1 }, this.props.navigation.key);
+  pushRoute(route, languageId = null) {
+    this.props.pushRoute({ key: route, index: 1, languageId: languageId }, this.props.navigation.key);
   }
 
   renderLanguages() {
-    const { fetching, fulfilled, error, languages } = this.props.languages;
+    const { fetching, fulfilled, error, languages } = this.props.languageList;
+    const destroyingLanguages = this.props.languageDestroy.languages;
 
     if (error) {
       return (
@@ -45,9 +46,24 @@ class LanguageList extends Component { // eslint-disable-line
     else if (fulfilled) {
       if (languages.length > 0) {
         return languages.map((language) => {
+          const destroying = (destroyingLanguages.indexOf(language.id) !== -1);
+
           return (
-            <ListItem key={language.id} style={styles.language} onPress={() => this.pushRoute('languageForm')}>
-              <Text style={styles.languageText}>{language.name}</Text>
+            <ListItem key={language.id} style={styles.language} onPress={() => this.pushRoute('languageForm', language.id)}>
+              <Body>
+                <Text style={styles.languageText}>{language.name}</Text>
+              </Body>
+              <Right>
+                {
+                  !destroying &&
+                  <Button transparent onPress={() => this.props.destroyLanguage(language.id)}>
+                    <Icon name="trash" />
+                  </Button>
+                }
+                {
+                  destroying && <Loader />
+                }
+              </Right>
             </ListItem>
           );
         });
@@ -86,12 +102,16 @@ class LanguageList extends Component { // eslint-disable-line
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
-  languages: state.languages.languageList,
+  languageList: state.languages.languageList,
+  languageDestroy: state.languages.languageDestroy,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     pushRoute: (route, key) => dispatch(pushRoute(route, key)),
+    destroyLanguage: (id) => {
+      return dispatch(destroyLanguage(id));
+    },
   };
 }
 

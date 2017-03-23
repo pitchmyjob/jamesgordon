@@ -5,7 +5,7 @@ import { LIST_SKILL_PENDING, LIST_SKILL_FULFILLED, LIST_SKILL_REJECTED,
 
 const INITIAL_STATE = {
     skillList: {pending: false, fulfilled: false, error: null, skills: []},
-    skillActive: {pending: false, fulfilled: false, error: null, skill: null},
+    skillDestroy: {pending: false, fulfilled: false, error: null, skills: []},
 }
 
 export default (state=INITIAL_STATE, action) => {
@@ -20,11 +20,15 @@ export default (state=INITIAL_STATE, action) => {
 
         // DESTROY
         case DESTROY_SKILL_PENDING:
-            return {...state, skillActive: {pending: true, fulfilled: false, error: null, skill: state.skillList.skills.find((skill) => { return skill.id === action.meta.id })}}
+            return {...state, skillDestroy: {pending: true, fulfilled: false, error: null, skills: state.skillDestroy.skills.concat(action.meta.id)}}
         case DESTROY_SKILL_FULFILLED:
-            return {...state, skillActive: {pending: false, fulfilled: true, error: null, skill: null}, skillList: {...state.skillList, skills: state.skillList.skills.filter((skill) => { return skill.id !== action.meta.id })}}
+            return {
+                ...state,
+                skillDestroy: {pending: false, fulfilled: true, error: null, skills: state.skillDestroy.skills.filter(skill => skill.id !== action.meta.id)},
+                skillList: {...state.skillList, skills: state.skillList.skills.filter(skill => skill.id !== action.meta.id)},
+            }
         case DESTROY_SKILL_REJECTED:
-            return {...state, skillActive: {pending: false, fulfilled: false, error: action.payload.response, skill: null}}
+            return {...state, skillDestroy: {pending: false, fulfilled: false, error: action.payload.response, skills: state.skillDestroy.skills.filter(skill => skill.id !== action.meta.id)}}
 
         // CREATE
         case CREATE_SKILL_FULFILLED:

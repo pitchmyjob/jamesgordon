@@ -28,7 +28,7 @@ class SkillForm extends Component { // eslint-disable-line
 
   renderSkills() {
     const { fetching, fulfilled, error, skills } = this.props.skillList;
-    const skillActive = this.props.skillActive.skill;
+    const destroyingSkills = this.props.skillDestroy.skills;
 
     if (error) {
       return (
@@ -40,7 +40,7 @@ class SkillForm extends Component { // eslint-disable-line
     else if (fulfilled) {
       if (skills.length > 0) {
         return skills.map((skill) => {
-          const destroying = (skillActive === skill);
+          const destroying = (destroyingSkills.indexOf(skill.id) !== -1);
 
           return (
             <Item
@@ -103,7 +103,7 @@ class SkillForm extends Component { // eslint-disable-line
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
   skillList: state.skills.skillList,
-  skillActive: state.skills.skillActive,
+  skillDestroy: state.skills.skillDestroy,
 });
 
 const mapDispatchToProps = (dispatch) => {

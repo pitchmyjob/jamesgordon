@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from 'react-native-navigation-redux-helpers';
-import { Container, Content, ListItem, Text, Button } from 'native-base';
+import { Container, Content, ListItem, Text, Button, Body, Right, Icon } from 'native-base';
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
 import Loader from './../loader';
 import styles from './styles';
 
-const { pushRoute } = actions;
+import { destroyEducation } from '../../actions/educations'
 
-const educations = ['Makina Corpus', 'ESGI', 'Charles de Foucauld'];
+const { pushRoute } = actions;
 
 class EducationList extends Component { // eslint-disable-line
 
@@ -28,12 +28,13 @@ class EducationList extends Component { // eslint-disable-line
     this.renderEducations = this.renderEducations.bind(this);
   }
 
-  pushRoute(route) {
-    this.props.pushRoute({ key: route, index: 1 }, this.props.navigation.key);
+  pushRoute(route, educationId = null) {
+    this.props.pushRoute({ key: route, index: 1, educationId: educationId }, this.props.navigation.key);
   }
 
   renderEducations() {
-    const { fetching, fulfilled, error, educations } = this.props.educations;
+    const { fetching, fulfilled, error, educations } = this.props.educationList;
+    const destroyingEducations = this.props.educationDestroy.educations;
 
     if (error) {
       return (
@@ -45,9 +46,24 @@ class EducationList extends Component { // eslint-disable-line
     else if (fulfilled) {
       if (educations.length > 0) {
         return educations.map((education) => {
+          const destroying = (destroyingEducations.indexOf(education.id) !== -1);
+
           return (
-            <ListItem key={education.id} style={styles.education} onPress={() => this.pushRoute('educationForm')}>
-              <Text style={styles.educationText}>{education.school}</Text>
+            <ListItem key={education.id} style={styles.education} onPress={() => this.pushRoute('educationForm', education.id)}>
+              <Body>
+                <Text style={styles.educationText}>{education.school}</Text>
+              </Body>
+              <Right>
+                {
+                  !destroying &&
+                  <Button transparent onPress={() => this.props.destroyEducation(education.id)}>
+                    <Icon name="trash" />
+                  </Button>
+                }
+                {
+                  destroying && <Loader />
+                }
+              </Right>
             </ListItem>
           );
         });
@@ -83,12 +99,16 @@ class EducationList extends Component { // eslint-disable-line
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
-  educations: state.educations.educationList,
+  educationList: state.educations.educationList,
+  educationDestroy: state.educations.educationDestroy,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     pushRoute: (route, key) => dispatch(pushRoute(route, key)),
+    destroyEducation: (id) => {
+      return dispatch(destroyEducation(id));
+    },
   };
 }
 

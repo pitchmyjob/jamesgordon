@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from 'react-native-navigation-redux-helpers';
-import { Container, Content, ListItem, Text, Button } from 'native-base';
+import { Container, Content, ListItem, Text, Button, Body, Right, Icon } from 'native-base';
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
 import Loader from './../loader';
 import styles from './styles';
 
-const { pushRoute } = actions;
+import { destroyExperience } from '../../actions/experiences'
 
-const experiences = ['webCompetence', 'Dailymotion', 'Jacquie & Michel'];
+const { pushRoute } = actions;
 
 class ExperienceList extends Component { // eslint-disable-line
 
@@ -29,11 +29,12 @@ class ExperienceList extends Component { // eslint-disable-line
   }
 
   pushRoute(route, experienceId = null) {
-    this.props.pushRoute({ key: route, experienceId: experienceId }, this.props.navigation.key);
+    this.props.pushRoute({ key: route, index: 1, experienceId: experienceId }, this.props.navigation.key);
   }
 
   renderExperiences() {
-    const { fetching, fulfilled, error, experiences } = this.props.experiences;
+    const { fetching, fulfilled, error, experiences } = this.props.experienceList;
+    const destroyingExperiences = this.props.experienceDestroy.experiences;
 
     if (error) {
       return (
@@ -45,9 +46,24 @@ class ExperienceList extends Component { // eslint-disable-line
     else if (fulfilled) {
       if (experiences.length > 0) {
         return experiences.map((experience) => {
+          const destroying = (destroyingExperiences.indexOf(experience.id) !== -1);
+
           return (
             <ListItem key={experience.id} style={styles.experience} onPress={() => this.pushRoute('experienceForm', experience.id)}>
-              <Text style={styles.experienceText}>{experience.company}</Text>
+              <Body>
+                <Text style={styles.experienceText}>{experience.company}</Text>
+              </Body>
+              <Right>
+                {
+                  !destroying &&
+                  <Button transparent onPress={() => this.props.destroyExperience(experience.id)}>
+                    <Icon name="trash" />
+                  </Button>
+                }
+                {
+                  destroying && <Loader />
+                }
+              </Right>
             </ListItem>
           );
         });
@@ -83,12 +99,16 @@ class ExperienceList extends Component { // eslint-disable-line
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
-  experiences: state.experiences.experienceList,
+  experienceList: state.experiences.experienceList,
+  experienceDestroy: state.experiences.experienceDestroy,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     pushRoute: (route, key) => dispatch(pushRoute(route, key)),
+    destroyExperience: (id) => {
+      return dispatch(destroyExperience(id));
+    },
   };
 }
 

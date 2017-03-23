@@ -28,7 +28,7 @@ class InterestForm extends Component { // eslint-disable-line
 
   renderInterests() {
     const { fetching, fulfilled, error, interests } = this.props.interestList;
-    const interestActive = this.props.interestActive.interest;
+    const destroyingInterests = this.props.interestDestroy.interests;
 
     if (error) {
       return (
@@ -40,7 +40,7 @@ class InterestForm extends Component { // eslint-disable-line
     else if (fulfilled) {
       if (interests.length > 0) {
         return interests.map((interest) => {
-          const destroying = (interestActive === interest);
+          const destroying = (destroyingInterests.indexOf(interest.id) !== -1);
 
           return (
             <Item
@@ -107,7 +107,7 @@ class InterestForm extends Component { // eslint-disable-line
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
   interestList: state.interests.interestList,
-  interestActive: state.interests.interestActive,
+  interestDestroy: state.interests.interestDestroy,
 });
 
 const mapDispatchToProps = (dispatch) => {
