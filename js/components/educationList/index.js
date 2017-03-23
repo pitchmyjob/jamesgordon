@@ -34,7 +34,7 @@ class EducationList extends Component { // eslint-disable-line
 
   renderEducations() {
     const { fetching, fulfilled, error, educations } = this.props.educationList;
-    const educationActive = this.props.educationActive.education;
+    const destroyingEducations = this.props.educationDestroy.educations;
 
     if (error) {
       return (
@@ -46,7 +46,7 @@ class EducationList extends Component { // eslint-disable-line
     else if (fulfilled) {
       if (educations.length > 0) {
         return educations.map((education) => {
-          const destroying = (educationActive === education);
+          const destroying = (destroyingEducations.indexOf(education.id) !== -1);
 
           return (
             <ListItem key={education.id} style={styles.education} onPress={() => this.pushRoute('educationForm', education.id)}>
@@ -100,7 +100,7 @@ class EducationList extends Component { // eslint-disable-line
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
   educationList: state.educations.educationList,
-  educationActive: state.educations.educationActive,
+  educationDestroy: state.educations.educationDestroy,
 });
 
 function mapDispatchToProps(dispatch) {
