@@ -30,10 +30,10 @@ class HeaderContent extends Component {
   }
 
   render() {
-    const { hasBackButton, subtitle } = this.props
+    const { hasBackButton, subtitle, ...restProps } = this.props
 
     return (
-      <Header>
+      <Header {...restProps}>
         {
           hasBackButton &&
           <Left>

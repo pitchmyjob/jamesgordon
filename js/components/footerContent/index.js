@@ -55,8 +55,8 @@ class FooterContent extends Component {
             <Icon active={this.isActiveFooterTab('matching')} name="briefcase" />
             <Text>Matching</Text>
           </Button>
-          <Button active={this.isActiveFooterTab('candidacies')} onPress={() => this.handleFooterTabClick('candidacies')}>
-            <Icon active={this.isActiveFooterTab('candidacies')} name="apps" />
+          <Button active={this.isActiveFooterTab('candidacyList')} onPress={() => this.handleFooterTabClick('candidacyList')}>
+            <Icon active={this.isActiveFooterTab('candidacyList')} name="apps" />
             <Text>Candidatures</Text>
           </Button>
         </FooterTab>

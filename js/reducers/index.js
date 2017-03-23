@@ -8,6 +8,7 @@ import educations from './educations';
 import skills from './skills';
 import interests from './interests';
 import languages from './languages';
+import candidacies from './candidacies';
 
 export default combineReducers({
   form,
@@ -18,4 +19,5 @@ export default combineReducers({
   skills,
   interests,
   languages,
+  candidacies,
 });

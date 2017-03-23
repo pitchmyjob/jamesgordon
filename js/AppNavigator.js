@@ -25,6 +25,7 @@ import LanguageList from './components/languageList';
 import LanguageForm from './components/languageForm';
 import SkillForm from './components/skillForm';
 import InterestForm from './components/interestForm';
+import CandidacyList from './components/candidacyList';
 import { statusBarColor } from './themes/base-theme';
 
 const { popRoute } = actions;
@@ -118,6 +119,8 @@ class AppNavigator extends Component {
         return <SkillForm />;
       case 'interestForm':
         return <InterestForm />;
+      case 'candidacyList':
+        return <CandidacyList />;
       default:
         return <SplashScreen />;
     }
