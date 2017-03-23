@@ -34,7 +34,7 @@ class ExperienceList extends Component { // eslint-disable-line
 
   renderExperiences() {
     const { fetching, fulfilled, error, experiences } = this.props.experienceList;
-    const experienceActive = this.props.experienceActive.experience;
+    const destroyingExperiences = this.props.experienceDestroy.experiences;
 
     if (error) {
       return (
@@ -46,7 +46,7 @@ class ExperienceList extends Component { // eslint-disable-line
     else if (fulfilled) {
       if (experiences.length > 0) {
         return experiences.map((experience) => {
-          const destroying = (experienceActive === experience);
+          const destroying = (destroyingExperiences.indexOf(experience.id) !== -1);
 
           return (
             <ListItem key={experience.id} style={styles.experience} onPress={() => this.pushRoute('experienceForm', experience.id)}>
@@ -100,7 +100,7 @@ class ExperienceList extends Component { // eslint-disable-line
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
   experienceList: state.experiences.experienceList,
-  experienceActive: state.experiences.experienceActive,
+  experienceDestroy: state.experiences.experienceDestroy,
 });
 
 function mapDispatchToProps(dispatch) {
