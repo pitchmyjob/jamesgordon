@@ -4,58 +4,10 @@ import { Container, Content, DeckSwiper, Thumbnail, Card, CardItem, Left, Right,
 
 import HeaderContent from './../headerContent';
 import FooterContent from './../footerContent';
+import Loader from './../loader';
 import styles from './styles';
 
-const cards = [
-  {
-    matchingScore: 92,
-    job: {
-      company: {
-        'name': 'airbnb',
-        'logo': require('../../../images/companies/company-logo-1.png'),
-      },
-      title: 'CTO',
-      address: 'Paris 18e',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque necessitatibus quam amet mollitia consequatur iste.',
-      created: '2 jours',
-      skills: ['php', 'aws'],
-      contractTypes: ['CDI', 'CDD'],
-      liked: false,
-    },
-  },
-  {
-    matchingScore: 82,
-    job: {
-      company: {
-        'name': 'Dailymotion',
-        'logo': require('../../../images/companies/company-logo-2.png'),
-      },
-      title: 'Développeur Python backend',
-      address: 'Aubervilliers',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque necessitatibus quam amet mollitia consequatur iste.',
-      created: '4 jours',
-      skills: ['python', 'graphQL'],
-      contractTypes: ['CDD'],
-      liked: true,
-    },
-  },
-  {
-    matchingScore: 50,
-    job: {
-      company: {
-        'name': 'Uber',
-        'logo': require('../../../images/companies/company-logo-3.png'),
-      },
-      title: 'Développeur Windaube',
-      address: 'Marseille',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque necessitatibus quam amet mollitia consequatur iste.',
-      created: '5 jours',
-      skills: ['C#'],
-      contractTypes: ['CDI'],
-      liked: false,
-    },
-  },
-];
+import { listCandidacy, likeCandidacy } from '../../actions/candidacies';
 
 class Matching extends Component { // eslint-disable-line
 
@@ -68,71 +20,117 @@ class Matching extends Component { // eslint-disable-line
   constructor(props) {
     super(props);
 
-    this.renderCards = this.renderCards.bind(this);
+    this.renderCandidaies = this.renderCandidaies.bind(this);
   }
 
-  renderCards(item) {
-    return cards.map((item, index) => {
+  componentDidMount() {
+    this.props.listMatchingCandidacy();
+  }
+
+  renderCandidaies() {
+    const { fetching, fulfilled, error, candidacies } = this.props.candidacyList;
+    const { candidacyActions } = this.props;
+
+    if (error) {
       return (
-        <Card key={index}>
+        <Card>
           <CardItem bordered>
-            <Left>
-              <Thumbnail source={item.job.company.logo} />
-            </Left>
             <Body>
-              <Text style={styles.textBlack}>{item.job.company.name}</Text>
-              <Text note>{item.job.title}</Text>
-              <Text note>
-                {item.job.contractTypes.join(', ')}
-              </Text>
+              <Text style={{color: 'red'}}>Erreur...</Text>
             </Body>
-            <Right>
-              <Text note>{item.matchingScore}%</Text>
-            </Right>
-          </CardItem>
-          <CardItem>
-            <Body>
-              <Text style={styles.textBlack}>{item.job.description}</Text>
-            </Body>
-          </CardItem>
-          <CardItem>
-            <Body>
-              <Text note>Compétences : {item.job.skills.join(', ')}</Text>
-            </Body>
-          </CardItem>
-          <CardItem>
-            <Body>
-              <Text note>{item.job.address}</Text>
-              <Text note>{item.job.created}</Text>
-            </Body>
-            <Right>
-              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Button transparent>
-                  <Icon name="heart" style={styles.heartIcon} active={item.job.liked} />
-                </Button>
-                <Button transparent>
-                  <Icon name="camera" />
-                </Button>
-                <Button transparent>
-                  <Icon name="trash" />
-                </Button>
-              </View>
-            </Right>
           </CardItem>
         </Card>
       );
-    });
+    }
+    else if (fulfilled) {
+      if (candidacies.length > 0) {
+        return candidacies.map((candidacy) => {
+          const actionRunning = (candidacyActions.indexOf(candidacy.id) !== -1);
+
+          return (
+            <Card key={candidacy.id}>
+              <CardItem bordered>
+                <Left>
+                  <Thumbnail source={{uri: candidacy.job.pro.logo}} />
+                </Left>
+                <Body>
+                  <Text style={styles.textBlack}>{candidacy.job.pro.company}</Text>
+                  <Text note>{candidacy.job.title}</Text>
+                  <Text note>
+                    {candidacy.job.contract_types_extra.join(', ')}
+                  </Text>
+                </Body>
+                <Right>
+                  <Text note>{candidacy.matching_score}%</Text>
+                </Right>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text style={styles.textBlack}>{candidacy.job.description}</Text>
+                </Body>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text note>Compétences : {candidacy.job.skills.join(', ')}</Text>
+                </Body>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text note>{candidacy.job.address}</Text>
+                  <Text note>{candidacy.job.created}</Text>
+                </Body>
+                <Right>
+                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                    {
+                      !actionRunning &&
+                      <View>
+                        <Button transparent onPress={() => this.props.likeCandidacy(candidacy.id)}>
+                          <Icon name="heart" style={styles.heartIcon} />
+                        </Button>
+                        <Button transparent>
+                          <Icon name="camera" />
+                        </Button>
+                        <Button transparent>
+                          <Icon name="trash" />
+                        </Button>
+                      </View>
+                    }
+                    {
+                      actionRunning && <Loader />
+                    }
+                  </View>
+                </Right>
+              </CardItem>
+            </Card>
+          );
+        });
+      }
+      else {
+        return (
+          <Card>
+            <CardItem bordered>
+              <Body>
+                <Text style={styles.textBlack}>Aucune offre</Text>
+              </Body>
+            </CardItem>
+          </Card>
+        );
+      }
+    }
+    else {
+      return <Loader />;
+    }
   }
 
   render() { // eslint-disable-line class-methods-use-this
     return (
       <Container>
         <View style={styles.container}>
-          <HeaderContent />
+          <HeaderContent hasBackButton={true} subtitle={'Offres'} />
           <Content style={styles.deck}>
-            {this.renderCards()}
+            {this.renderCandidaies()}
           </Content>
-          <FooterContent />
+          <FooterContent currentTab={'matching'} />
         </View>
       </Container>
     );
@@ -141,6 +139,19 @@ class Matching extends Component { // eslint-disable-line
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
+  candidacyList: state.candidacies.candidacyList,
+  candidacyActions: state.candidacies.candidacyActions,
 });
 
-export default connect(mapStateToProps, null)(Matching);
+function mapDispatchToProps(dispatch) {
+  return {
+    listMatchingCandidacy: () => {
+      return dispatch(listCandidacy());
+    },
+    likeCandidacy: (id) => {
+      return dispatch(likeCandidacy(id));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Matching);
