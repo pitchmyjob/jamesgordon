@@ -1,5 +1,6 @@
 import { LIST_CANDIDACY_PENDING, LIST_CANDIDACY_FULFILLED, LIST_CANDIDACY_REJECTED,
          LIKE_CANDIDACY_PENDING, LIKE_CANDIDACY_FULFILLED, LIKE_CANDIDACY_REJECTED,
+         POSTULATE_CANDIDACY_PENDING, POSTULATE_CANDIDACY_FULFILLED, POSTULATE_CANDIDACY_REJECTED,
 } from '../constants/candidacies'
 
 const INITIAL_STATE = {
@@ -19,8 +20,10 @@ export default (state=INITIAL_STATE, action) => {
 
         // LIKE & POSTULATE
         case LIKE_CANDIDACY_PENDING:
+        case POSTULATE_CANDIDACY_PENDING:
             return {...state, candidacyActions: state.candidacyActions.concat(action.meta.id)}
         case LIKE_CANDIDACY_FULFILLED:
+        case POSTULATE_CANDIDACY_FULFILLED:
             return {
                 ...state,
                 candidacyList: {
@@ -30,6 +33,7 @@ export default (state=INITIAL_STATE, action) => {
                 candidacyActions: state.candidacyActions.filter(candidacyId => candidacyId !== action.meta.id),
             }
         case LIKE_CANDIDACY_REJECTED:
+        case POSTULATE_CANDIDACY_REJECTED:
             return {...state, candidacyActions: state.candidacyActions.filter(candidacyId => candidacyId !== action.meta.id)}
 
         default:

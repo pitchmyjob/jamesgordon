@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { actions } from 'react-native-navigation-redux-helpers';
 import { Container, Content, DeckSwiper, Thumbnail, Card, CardItem, Left, Right, Body, Icon, Text, View, Button } from 'native-base';
 
 import HeaderContent from './../headerContent';
@@ -9,9 +10,12 @@ import styles from './styles';
 
 import { listCandidacy, likeCandidacy } from '../../actions/candidacies';
 
+const { pushRoute } = actions;
+
 class Matching extends Component { // eslint-disable-line
 
   static propTypes = {
+    pushRoute: React.PropTypes.func,
     navigation: React.PropTypes.shape({
       key: React.PropTypes.string,
     }),
@@ -20,11 +24,16 @@ class Matching extends Component { // eslint-disable-line
   constructor(props) {
     super(props);
 
+    this.pushRoute = this.pushRoute.bind(this);
     this.renderCandidaies = this.renderCandidaies.bind(this);
   }
 
   componentDidMount() {
     this.props.listMatchingCandidacy();
+  }
+
+  pushRoute(route, candidacyId = null) {
+    this.props.pushRoute({ key: route, index: 1, candidacyId: candidacyId }, this.props.navigation.key);
   }
 
   renderCandidaies() {
@@ -87,7 +96,7 @@ class Matching extends Component { // eslint-disable-line
                         <Button transparent onPress={() => this.props.likeCandidacy(candidacy.id)}>
                           <Icon name="heart" style={styles.heartIcon} />
                         </Button>
-                        <Button transparent>
+                        <Button transparent onPress={() => this.pushRoute('answerQuestion', candidacy.id)}>
                           <Icon name="camera" />
                         </Button>
                         <Button transparent>
@@ -126,7 +135,7 @@ class Matching extends Component { // eslint-disable-line
     return (
       <Container>
         <View style={styles.container}>
-          <HeaderContent hasBackButton={true} subtitle={'Offres'} />
+          <HeaderContent subtitle={'Offres'} />
           <Content style={styles.deck}>
             {this.renderCandidaies()}
           </Content>
@@ -145,8 +154,9 @@ const mapStateToProps = state => ({
 
 function mapDispatchToProps(dispatch) {
   return {
+    pushRoute: (route, key) => dispatch(pushRoute(route, key)),
     listMatchingCandidacy: () => {
-      return dispatch(listCandidacy());
+      return dispatch(listCandidacy('M'));
     },
     likeCandidacy: (id) => {
       return dispatch(likeCandidacy(id));
