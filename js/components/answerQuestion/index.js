@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Content } from 'native-base';
+import { View } from 'react-native';
+import { Container, Content, Text, Button } from 'native-base';
 import Camera from 'react-native-camera';
 import { RNS3 } from 'react-native-aws3';
 import Video from 'react-native-video';
@@ -55,9 +56,9 @@ class AnswerQuestion extends Component { // eslint-disable-line
     };
   }
 
-  componentDidMount() {
-    this.props.listMatchingCandidacy();
-  }
+  // componentDidMount() {
+  //   this.props.listMatchingCandidacy();
+  // }
 
   startRecordin() {
     if (this.camera) {
@@ -105,32 +106,22 @@ class AnswerQuestion extends Component { // eslint-disable-line
   renderCamera() {
     return (
       <Camera
-        ref={(cam) => {
-          this.camera = cam;
-        }}
+        ref={(cam) => { this.camera = cam; }}
         type={Camera.constants.Type.front}
         style={styles.preview}
         mirrorImage={true}
         mirrorVideo={true}
         aspect={Camera.constants.Aspect.fill}
       >
-        <View style={{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-        }}>
           <Text style={styles.question}>
             Es tu un gros enculé ?
           </Text>
-          <View style={styles.buttons} >
-            {
-              !this.state.isRecording &&
-              <Text style={styles.capture} onPress={this.startRecordin.bind(this)}>[GO VIDEO]</Text>
-              ||
-              <Text style={styles.capture} onPress={this.stopRecording.bind(this)}>[STOP VIDEO]</Text>
-            }
-          </View>
-        </View>
+          {
+            !this.state.isRecording &&
+            <Text style={styles.capture} onPress={this.startRecordin.bind(this)}>[GO VIDEO]</Text>
+            ||
+            <Text style={styles.capture} onPress={this.stopRecording.bind(this)}>[STOP VIDEO]</Text>
+          }
       </Camera>
     );
   }
@@ -191,16 +182,14 @@ class AnswerQuestion extends Component { // eslint-disable-line
 
   render() { // eslint-disable-line class-methods-use-this
     return (
-      <Container>
-        <View style={styles.container}>
-          <HeaderContent subtitle={'Offres'} />
-          <Content>
-            {this.state.step === 1 && this.renderCamera()}
-            {this.state.step === 2 && this.renderPlayer()}
-            {this.state.step === 3 && this.renderFinish()}
-          </Content>
-          <FooterContent currentTab={'matching'} />
-        </View>
+      <Container style={styles.container}>
+        <HeaderContent subtitle={'Offres'} />
+        <Content>
+          {this.state.step === 1 && this.renderCamera()}
+          {this.state.step === 2 && this.renderPlayer()}
+          {this.state.step === 3 && this.renderFinish()}
+        </Content>
+        <FooterContent currentTab={'matching'} />
       </Container>
     );
   }

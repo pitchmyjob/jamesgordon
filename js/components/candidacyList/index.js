@@ -75,7 +75,7 @@ class CandidacyList extends Component { // eslint-disable-line
   render() { // eslint-disable-line class-methods-use-this
     return (
       <Container style={styles.container}>
-          <HeaderContent hasBackButton={true} subtitle={'Candidatures'} />
+          <HeaderContent subtitle={'Candidatures'} />
           <Content>
             {this.renderCandidacies()}
           </Content>
